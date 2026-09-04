@@ -1,0 +1,1701 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>ボカブキ フライヤー収集</title>
+<meta name="description" content="ボカブキ 全ホリデーイベントのフライヤー画像収集チェックリスト">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Roboto+Flex:opsz,wght@8..144,300..800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,300..600,0..1,-25..0&display=block" rel="stylesheet">
+<style>
+/* ============================================================
+   ボカブキ フライヤー収集 — Material 3 Expressive (plain CSS)
+   ============================================================ */
+
+:root{
+  color-scheme: light;
+  /* --- primary (vivid magenta/violet, seed #7B2CBF) --- */
+  --md-primary: #7B2CBF;
+  --md-on-primary: #FFFFFF;
+  --md-primary-container: #F0DBFF;
+  --md-on-primary-container: #2E0060;
+  /* --- secondary (muted violet-grey) --- */
+  --md-secondary: #6C5677;
+  --md-on-secondary: #FFFFFF;
+  --md-secondary-container: #F3DAFF;
+  --md-on-secondary-container: #271430;
+  /* --- tertiary (teal/cyan accent, seed #00B4D8) --- */
+  --md-tertiary: #006876;
+  --md-on-tertiary: #FFFFFF;
+  --md-tertiary-container: #A0EEFF;
+  --md-on-tertiary-container: #001F24;
+  /* --- surfaces --- */
+  --md-surface: #FFFBFF;
+  --md-surface-dim: #E0D7E3;
+  --md-surface-bright: #FFFBFF;
+  --md-surface-container-lowest: #FFFFFF;
+  --md-surface-container-low: #F9F0FB;
+  --md-surface-container: #F4EAF6;
+  --md-surface-container-high: #EEE4F0;
+  --md-surface-container-highest: #E8DEEB;
+  --md-on-surface: #1E1A20;
+  --md-on-surface-variant: #4A454E;
+  --md-outline: #7B747E;
+  --md-outline-variant: #CCC3CE;
+  --md-error: #BA1A1A;
+  --md-on-error: #FFFFFF;
+  --md-error-container: #FFDAD6;
+  --md-on-error-container: #410002;
+  --md-scrim: #000000;
+  --md-shadow: 0 4px 16px rgba(60, 0, 90, 0.16);
+  --ease-emphasized: cubic-bezier(0.2, 0, 0, 1);
+}
+
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    color-scheme: dark;
+    --md-primary: #E1B6FF;
+    --md-on-primary: #48007A;
+    --md-primary-container: #61199C;
+    --md-on-primary-container: #F0DBFF;
+    --md-secondary: #D7BEE2;
+    --md-on-secondary: #3B2945;
+    --md-secondary-container: #52405C;
+    --md-on-secondary-container: #F3DAFF;
+    --md-tertiary: #83D3E4;
+    --md-on-tertiary: #00363D;
+    --md-tertiary-container: #004E59;
+    --md-on-tertiary-container: #A0EEFF;
+    --md-surface: #141117;
+    --md-surface-dim: #141117;
+    --md-surface-bright: #3B363F;
+    --md-surface-container-lowest: #0F0C13;
+    --md-surface-container-low: #1E1A20;
+    --md-surface-container: #221E27;
+    --md-surface-container-high: #2D2831;
+    --md-surface-container-highest: #38333C;
+    --md-on-surface: #E8DEEB;
+    --md-on-surface-variant: #CCC3CE;
+    --md-outline: #968E99;
+    --md-outline-variant: #4A454E;
+    --md-error: #FFB4AB;
+    --md-on-error: #690005;
+    --md-error-container: #93000A;
+    --md-on-error-container: #FFDAD6;
+    --md-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+  }
+}
+
+*, *::before, *::after{ box-sizing: border-box; }
+
+html{ -webkit-text-size-adjust: 100%; }
+
+body{
+  margin: 0;
+  min-height: 100vh;
+  background: var(--md-surface);
+  color: var(--md-on-surface);
+  font-family: "Roboto Flex", "Google Sans Flex", system-ui, sans-serif;
+  font-optical-sizing: auto;
+  -webkit-font-smoothing: antialiased;
+  padding-bottom: 96px;
+  overflow-x: hidden;
+}
+
+.ms{
+  font-family: "Material Symbols Rounded";
+  font-weight: normal;
+  font-style: normal;
+  font-size: 24px;
+  line-height: 1;
+  letter-spacing: normal;
+  text-transform: none;
+  display: inline-block;
+  white-space: nowrap;
+  word-wrap: normal;
+  direction: ltr;
+  font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24;
+  vertical-align: middle;
+  user-select: none;
+}
+.ms.filled{ font-variation-settings: "FILL" 1, "wght" 400, "GRAD" 0, "opsz" 24; }
+
+img{ max-width: 100%; }
+
+button{ font-family: inherit; }
+
+a{ color: var(--md-primary); }
+
+::selection{ background: var(--md-primary-container); color: var(--md-on-primary-container); }
+
+/* ---------------- App bar / header ---------------- */
+.app-bar{
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  background: color-mix(in srgb, var(--md-surface-container) 92%, transparent);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--md-outline-variant);
+  padding: 20px 20px 12px;
+}
+.app-bar-row{
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+}
+.app-title{
+  margin: 0;
+  font-size: clamp(22px, 5vw, 30px);
+  font-weight: 700;
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+  background: linear-gradient(120deg, var(--md-primary), var(--md-tertiary));
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.app-bar-actions{ display:flex; gap:8px; flex-shrink:0; }
+
+.icon-button{
+  width: 44px;
+  height: 44px;
+  border-radius: 16px;
+  border: none;
+  background: var(--md-surface-container-high);
+  color: var(--md-on-surface);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background-color 220ms var(--ease-emphasized), transform 220ms var(--ease-emphasized);
+  position: relative;
+}
+.icon-button:hover{ background: var(--md-surface-container-highest); }
+.icon-button:active{ transform: scale(0.92); }
+
+.progress-section{ margin-top: 16px; }
+.progress-label{
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 8px;
+  font-size: 13px;
+  color: var(--md-on-surface-variant);
+  margin-bottom: 8px;
+  flex-wrap: wrap;
+}
+#progressText{ font-weight: 600; color: var(--md-on-surface); font-size: 14px; }
+#countdownText{
+  font-weight: 700;
+  color: var(--md-tertiary);
+  white-space: nowrap;
+}
+.progress-track{
+  position: relative;
+  height: 10px;
+  border-radius: 999px;
+  background: var(--md-surface-container-highest);
+  overflow: visible;
+}
+.progress-fill{
+  position: absolute;
+  inset: 0;
+  width: 0%;
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--md-primary), var(--md-tertiary));
+  transition: width 600ms var(--ease-emphasized);
+}
+.progress-stop{
+  position: absolute;
+  right: 2px;
+  top: 50%;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--md-surface);
+  transform: translateY(-50%);
+  box-shadow: 0 0 0 1px var(--md-outline-variant);
+}
+
+.filter-row{ margin-top: 16px; }
+.filter-hint{
+  margin: 8px 2px 0;
+  font-size: 11px;
+  color: var(--md-on-surface-variant);
+  line-height: 1.5;
+}
+.segmented-button{
+  display: inline-flex;
+  border: 1px solid var(--md-outline);
+  border-radius: 999px;
+  overflow: hidden;
+  width: 100%;
+  max-width: 340px;
+}
+.segment{
+  flex: 1;
+  border: none;
+  background: transparent;
+  color: var(--md-on-surface);
+  padding: 10px 16px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  transition: background-color 260ms var(--ease-emphasized), color 260ms var(--ease-emphasized);
+  position: relative;
+}
+.segment + .segment{ border-left: 1px solid var(--md-outline); }
+.segment.active{
+  background: var(--md-secondary-container);
+  color: var(--md-on-secondary-container);
+}
+.segment .ms{ font-size: 18px; display:none; }
+.segment.active .ms{ display:inline-block; }
+
+/* ---------------- Month jump chips ---------------- */
+.month-chip-row{
+  position: sticky;
+  top: var(--appbar-h, 148px);
+  z-index: 15;
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  padding: 10px 20px;
+  background: color-mix(in srgb, var(--md-surface) 88%, transparent);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--md-outline-variant);
+  scrollbar-width: thin;
+}
+.month-chip-row::-webkit-scrollbar{ height: 4px; }
+.month-chip{
+  flex-shrink: 0;
+  border-radius: 12px;
+  border: 1px solid var(--md-outline-variant);
+  background: var(--md-surface-container-low);
+  color: var(--md-on-surface-variant);
+  padding: 7px 14px;
+  font-size: 13px;
+  font-weight: 600;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: background-color 220ms var(--ease-emphasized), color 220ms var(--ease-emphasized), transform 150ms var(--ease-emphasized);
+}
+.month-chip:hover{ background: var(--md-surface-container-high); }
+.month-chip:active{ transform: scale(0.94); }
+.month-chip.current{
+  background: var(--md-tertiary-container);
+  color: var(--md-on-tertiary-container);
+  border-color: transparent;
+}
+
+/* ---------------- Calendar ---------------- */
+#calendarRoot{ padding: 8px 20px 40px; max-width: 1080px; margin: 0 auto; }
+
+.month-section{ margin-top: 36px; scroll-margin-top: calc(var(--appbar-h, 148px) + var(--chiprow-h, 52px) + 8px); }
+.month-title{
+  font-size: clamp(26px, 6vw, 40px);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  margin: 0 0 14px 2px;
+  color: var(--md-on-surface);
+}
+.month-title .yr{
+  font-size: 0.5em;
+  font-weight: 600;
+  color: var(--md-on-surface-variant);
+  margin-right: 6px;
+}
+
+.month-grid{
+  background: var(--md-surface-container-low);
+  border-radius: 28px;
+  padding: 12px;
+  border: 1px solid var(--md-outline-variant);
+}
+.grid-header{
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 4px;
+  padding: 4px 4px 8px;
+}
+.grid-header span{
+  text-align: center;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--md-on-surface-variant);
+}
+.grid-header span.sat{ color: var(--md-tertiary); }
+.grid-header span.sun{ color: var(--md-error); }
+.grid-body{
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 4px;
+}
+.day-cell{
+  min-height: 108px;
+  border-radius: 16px;
+  padding: 6px;
+  background: var(--md-surface-container-lowest);
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  transition: background-color 300ms var(--ease-emphasized);
+}
+.day-cell.empty{ background: transparent; }
+.day-cell.weekend{ background: color-mix(in srgb, var(--md-tertiary-container) 35%, var(--md-surface-container-lowest)); }
+.day-cell.today{ box-shadow: inset 0 0 0 2px var(--md-primary); }
+.day-num{
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--md-on-surface-variant);
+  padding: 2px 4px;
+}
+.day-cell.weekend .day-num{ color: var(--md-on-surface); }
+.day-chips{ display: flex; flex-direction: column; gap: 3px; }
+
+/* ---------------- Event chips ---------------- */
+.event-chip{
+  border: none;
+  border-radius: 12px;
+  padding: 5px 8px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  text-align: left;
+  width: 100%;
+  font-family: inherit;
+  transition: transform 180ms var(--ease-emphasized), background-color 220ms var(--ease-emphasized), box-shadow 220ms var(--ease-emphasized);
+}
+.event-chip:hover{ transform: translateY(-1px); }
+.event-chip:active{ transform: scale(0.97); }
+.event-chip.no-image{
+  background: transparent;
+  border: 1.5px dashed var(--md-outline);
+  color: var(--md-on-surface-variant);
+}
+.event-chip.has-image{
+  background: var(--md-primary-container);
+  color: var(--md-on-primary-container);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+}
+.event-chip.has-image:hover{ box-shadow: 0 3px 8px rgba(0,0,0,0.16); }
+.event-chip.dim{ opacity: 0.42; }
+.event-chip.img-missing{ background: var(--md-surface-container-high); color: var(--md-on-surface-variant); }
+
+.chip-thumb{
+  width: 24px; height: 24px;
+  border-radius: 7px;
+  overflow: hidden;
+  flex-shrink: 0;
+  background: var(--md-surface-container-highest);
+  display:flex; align-items:center; justify-content:center;
+}
+.chip-thumb img{ width: 100%; height: 100%; object-fit: cover; display:block; }
+.event-chip.img-missing .chip-thumb img{ display:none; }
+.deploy-note{ display:none; font-size: 9px; }
+.event-chip.img-missing .deploy-note{ display:block; }
+
+.chip-text{ min-width: 0; display: flex; flex-direction: column; gap: 1px; }
+.chip-title{
+  font-size: 12px;
+  font-weight: 600;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.chip-status{
+  font-size: 10px;
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  opacity: 0.85;
+}
+.chip-icon{ font-size: 12px !important; }
+
+/* ---------------- Mobile list ---------------- */
+.month-list{ display: none; flex-direction: column; gap: 10px; }
+.list-day{
+  background: var(--md-surface-container-low);
+  border-radius: 20px;
+  padding: 12px 14px;
+  border: 1px solid var(--md-outline-variant);
+}
+.list-day.weekend{ background: color-mix(in srgb, var(--md-tertiary-container) 30%, var(--md-surface-container-low)); }
+.list-date{
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--md-on-surface-variant);
+  margin-bottom: 8px;
+}
+.list-chips{ display: flex; flex-direction: column; gap: 6px; }
+.list-chips .event-chip{ padding: 10px 12px; border-radius: 16px; }
+.list-chips .chip-title{ font-size: 14px; white-space: normal; }
+.list-chips .chip-status{ font-size: 12px; }
+.list-chips .chip-thumb{ width: 36px; height: 36px; border-radius: 10px; }
+
+.empty-month-note{ font-size: 13px; color: var(--md-on-surface-variant); padding: 8px 4px; }
+
+@media (max-width: 700px){
+  .month-grid{ display: none; }
+  .month-list{ display: flex; }
+  .app-bar{ padding: 16px 16px 10px; }
+  .month-chip-row{ padding: 10px 16px; }
+  #calendarRoot{ padding: 8px 16px 40px; }
+}
+
+/* ---------------- FAB ---------------- */
+.fab-extended{
+  position: fixed;
+  right: 20px;
+  bottom: 24px;
+  z-index: 30;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border: none;
+  border-radius: 20px;
+  padding: 16px 24px 16px 20px;
+  background: var(--md-primary);
+  color: var(--md-on-primary);
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 6px 18px rgba(123, 44, 191, 0.4);
+  transition: transform 260ms var(--ease-emphasized), box-shadow 260ms var(--ease-emphasized), border-radius 260ms var(--ease-emphasized);
+}
+.fab-extended:hover{ box-shadow: 0 10px 26px rgba(123, 44, 191, 0.5); transform: translateY(-2px); }
+.fab-extended:active{ transform: scale(0.95); border-radius: 28px; }
+.fab-extended .ms{ font-size: 22px; }
+@media (max-width: 700px){
+  .fab-extended span:last-child{ display: none; }
+  .fab-extended{ padding: 16px; border-radius: 20px; }
+}
+
+/* ---------------- Dialogs ---------------- */
+dialog.m3-dialog{
+  border: none;
+  padding: 0;
+  border-radius: 28px;
+  background: var(--md-surface-container-high);
+  color: var(--md-on-surface);
+  width: min(480px, 92vw);
+  max-height: 88vh;
+  box-shadow: var(--md-shadow);
+  overflow: hidden;
+}
+dialog.m3-dialog::backdrop{
+  background: color-mix(in srgb, var(--md-scrim) 42%, transparent);
+  backdrop-filter: blur(2px);
+}
+dialog.m3-dialog[open]{
+  animation: dialog-in 380ms var(--ease-emphasized);
+}
+@keyframes dialog-in{
+  from{ opacity: 0; transform: scale(0.9) translateY(12px); }
+  to{ opacity: 1; transform: scale(1) translateY(0); }
+}
+.dialog-surface{ display: flex; flex-direction: column; max-height: 88vh; }
+.dialog-header{
+  padding: 24px 24px 8px;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+}
+.dialog-title{ font-size: 20px; font-weight: 700; margin: 0; }
+.dialog-body{ padding: 8px 24px 4px; overflow-y: auto; display:flex; flex-direction:column; gap: 18px; }
+.dialog-actions{
+  padding: 16px 24px 24px;
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.dialog-actions.spread{ justify-content: space-between; }
+
+.field-date{ font-size: 13px; color: var(--md-on-surface-variant); font-weight: 600; }
+
+.text-field{
+  position: relative;
+}
+.text-field input[type="text"], .text-field input[type="url"], .text-field input[type="date"], .text-field input[type="password"]{
+  width: 100%;
+  padding: 20px 14px 8px;
+  border-radius: 12px;
+  border: 1px solid var(--md-outline);
+  background: var(--md-surface-container-low);
+  color: var(--md-on-surface);
+  font-size: 15px;
+  font-family: inherit;
+  transition: border-color 220ms var(--ease-emphasized), box-shadow 220ms var(--ease-emphasized);
+}
+.text-field input:focus{
+  outline: none;
+  border-color: var(--md-primary);
+  box-shadow: 0 0 0 1px var(--md-primary);
+}
+.text-field label{
+  position: absolute;
+  left: 14px;
+  top: 14px;
+  font-size: 15px;
+  color: var(--md-on-surface-variant);
+  pointer-events: none;
+  transition: all 180ms var(--ease-emphasized);
+  background: transparent;
+  padding: 0 2px;
+}
+.text-field input:focus + label,
+.text-field input:not(:placeholder-shown) + label,
+.text-field.has-value label{
+  top: 4px;
+  font-size: 11px;
+  color: var(--md-primary);
+}
+.text-field-row{ display: flex; align-items: center; gap: 8px; }
+.text-field-row .text-field{ flex: 1; }
+.open-link{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  background: var(--md-tertiary-container);
+  color: var(--md-on-tertiary-container);
+  flex-shrink: 0;
+  text-decoration: none;
+}
+
+.switch-row{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+.switch-row .switch-label{ font-size: 14px; font-weight: 600; }
+.switch{
+  position: relative;
+  width: 52px;
+  height: 32px;
+  border-radius: 999px;
+  background: var(--md-surface-container-highest);
+  border: 2px solid var(--md-outline);
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: background-color 260ms var(--ease-emphasized), border-color 260ms var(--ease-emphasized);
+}
+.switch .knob{
+  position: absolute;
+  top: 3px; left: 3px;
+  width: 22px; height: 22px;
+  border-radius: 50%;
+  background: var(--md-outline);
+  transition: transform 320ms var(--ease-emphasized), background-color 260ms var(--ease-emphasized), width 200ms var(--ease-emphasized), height 200ms var(--ease-emphasized);
+}
+.switch.on{ background: var(--md-primary); border-color: var(--md-primary); }
+.switch.on .knob{
+  transform: translateX(20px);
+  background: var(--md-on-primary);
+  width: 24px; height: 24px;
+  top: 2px; left: 2px;
+}
+
+.image-zone{
+  border: 2px dashed var(--md-outline-variant);
+  border-radius: 20px;
+  min-height: 160px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  background: var(--md-surface-container-low);
+  transition: border-color 220ms var(--ease-emphasized), background-color 220ms var(--ease-emphasized);
+  text-align: center;
+  padding: 16px;
+}
+.image-zone.drag-over{ border-color: var(--md-primary); background: var(--md-primary-container); }
+.image-zone.has-image{ border-style: solid; padding: 0; }
+.image-zone img{ width: 100%; max-height: 320px; object-fit: contain; display:block; background: var(--md-surface-container-highest); }
+.image-zone .placeholder-icon{ font-size: 40px; color: var(--md-on-surface-variant); }
+.image-zone .placeholder-text{ font-size: 13px; color: var(--md-on-surface-variant); font-weight: 600; }
+.image-zone .placeholder-sub{ font-size: 11px; color: var(--md-on-surface-variant); opacity: 0.8; }
+.image-zone .deploy-pill{
+  position: absolute; top: 8px; left: 8px;
+  background: var(--md-error-container); color: var(--md-on-error-container);
+  font-size: 11px; font-weight: 700; padding: 4px 10px; border-radius: 999px;
+}
+
+/* ---------------- Buttons ---------------- */
+.btn{
+  border: none;
+  border-radius: 20px;
+  padding: 10px 20px;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform 180ms var(--ease-emphasized), box-shadow 220ms var(--ease-emphasized), background-color 220ms var(--ease-emphasized);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.btn:active{ transform: scale(0.95); }
+.btn-filled{ background: var(--md-primary); color: var(--md-on-primary); }
+.btn-filled:hover{ box-shadow: 0 4px 12px rgba(123,44,191,0.35); }
+.btn-tonal{ background: var(--md-secondary-container); color: var(--md-on-secondary-container); }
+.btn-outlined{ background: transparent; color: var(--md-on-surface); border: 1px solid var(--md-outline); }
+.btn-error{ background: var(--md-error-container); color: var(--md-on-error-container); }
+.btn-text{ background: transparent; color: var(--md-primary); padding: 10px 12px; }
+
+/* ---------------- Snackbar ---------------- */
+.snackbar{
+  position: fixed;
+  left: 50%;
+  bottom: 24px;
+  transform: translate(-50%, 120%);
+  background: var(--md-on-surface);
+  color: var(--md-surface);
+  padding: 14px 22px;
+  border-radius: 16px;
+  font-size: 14px;
+  font-weight: 600;
+  box-shadow: var(--md-shadow);
+  z-index: 100;
+  max-width: 90vw;
+  transition: transform 380ms var(--ease-emphasized);
+}
+.snackbar.visible{ transform: translate(-50%, 0); }
+.snackbar.error{ background: var(--md-error); color: var(--md-on-error); }
+
+/* ---------------- misc ---------------- */
+.visually-hidden{
+  position: absolute; width: 1px; height: 1px; overflow: hidden;
+  clip: rect(0 0 0 0); white-space: nowrap;
+}
+</style>
+</head>
+<body>
+
+<header class="app-bar">
+  <div class="app-bar-row">
+    <h1 class="app-title">ボカブキ<br>フライヤー収集</h1>
+    <div class="app-bar-actions">
+      <button id="settingsBtn" class="icon-button" aria-label="設定" title="設定">
+        <span class="ms">settings</span>
+      </button>
+    </div>
+  </div>
+  <div class="progress-section">
+    <div class="progress-label">
+      <span id="progressText">画像あり 0 / 0（休日イベント）</span>
+      <span id="countdownText">周年まであと — 日</span>
+    </div>
+    <div class="progress-track">
+      <div class="progress-fill" id="progressFill"></div>
+      <div class="progress-stop"></div>
+    </div>
+  </div>
+  <div class="filter-row">
+    <div class="segmented-button" role="group" aria-label="表示フィルタ">
+      <button type="button" class="segment active" data-filter="holiday"><span class="ms">check</span>休日のみ</button>
+      <button type="button" class="segment" data-filter="all"><span class="ms">check</span>すべて</button>
+    </div>
+    <p class="filter-hint">休日イベント = 金夜・土夜開催（カレンダー上は色付きの日）。イベントごとにスイッチで個別に変更できます。</p>
+  </div>
+</header>
+
+<nav class="month-chip-row" id="monthChipRow" aria-label="月へ移動"></nav>
+
+<main id="calendarRoot"></main>
+
+<button id="addFab" class="fab-extended" type="button">
+  <span class="ms">add</span><span>イベント追加</span>
+</button>
+
+<!-- ============ Event dialog ============ -->
+<dialog id="eventDialog" class="m3-dialog">
+  <div class="dialog-surface">
+    <div class="dialog-header">
+      <div>
+        <p class="field-date" id="eventDialogDate">2026-01-01</p>
+        <h2 class="dialog-title">イベント詳細</h2>
+      </div>
+      <button type="button" class="icon-button" data-close-dialog aria-label="閉じる"><span class="ms">close</span></button>
+    </div>
+    <div class="dialog-body">
+      <div class="text-field">
+        <input type="text" id="eventTitleInput" placeholder=" " autocomplete="off">
+        <label for="eventTitleInput">タイトル</label>
+      </div>
+      <div class="switch-row">
+        <span class="switch-label">休日イベント</span>
+        <button type="button" class="switch" id="eventHolidaySwitch" role="switch" aria-checked="false"><span class="knob"></span></button>
+      </div>
+      <div class="text-field-row">
+        <div class="text-field">
+          <input type="url" id="eventTweetInput" placeholder=" " autocomplete="off">
+          <label for="eventTweetInput">ツイート（X）URL</label>
+        </div>
+        <a href="#" target="_blank" rel="noopener noreferrer" class="open-link" id="eventTweetOpen" style="display:none;" aria-label="ツイートを開く"><span class="ms">open_in_new</span></a>
+      </div>
+      <div>
+        <div class="image-zone" id="eventImageZone" tabindex="0">
+          <span class="ms placeholder-icon">image</span>
+          <span class="placeholder-text">画像なし</span>
+          <span class="placeholder-sub">クリックして選択 / ドラッグ＆ドロップ / 貼り付け(Ctrl+V)</span>
+        </div>
+        <input type="file" id="eventImageInput" accept="image/*" class="visually-hidden">
+      </div>
+    </div>
+    <div class="dialog-actions spread">
+      <button type="button" class="btn btn-error" id="eventDeleteEventBtn" style="display:none;"><span class="ms">delete_forever</span>イベントを削除</button>
+      <div style="display:flex; gap:8px; flex-wrap:wrap; margin-left:auto;">
+        <button type="button" class="btn btn-outlined" id="eventDeleteImageBtn"><span class="ms">hide_image</span>この画像を削除</button>
+        <button type="button" class="btn btn-text" data-close-dialog>閉じる</button>
+        <button type="button" class="btn btn-filled" id="eventSaveBtn"><span class="ms">save</span>保存</button>
+      </div>
+    </div>
+  </div>
+</dialog>
+
+<!-- ============ Add event dialog ============ -->
+<dialog id="addDialog" class="m3-dialog">
+  <div class="dialog-surface">
+    <div class="dialog-header">
+      <h2 class="dialog-title">イベント追加</h2>
+      <button type="button" class="icon-button" data-close-dialog aria-label="閉じる"><span class="ms">close</span></button>
+    </div>
+    <div class="dialog-body">
+      <div class="text-field">
+        <input type="date" id="addDateInput" placeholder=" ">
+        <label for="addDateInput">日付</label>
+      </div>
+      <div class="text-field">
+        <input type="text" id="addTitleInput" placeholder=" " autocomplete="off">
+        <label for="addTitleInput">タイトル</label>
+      </div>
+      <div class="switch-row">
+        <span class="switch-label">休日イベント</span>
+        <button type="button" class="switch on" id="addHolidaySwitch" role="switch" aria-checked="true"><span class="knob"></span></button>
+      </div>
+      <div class="text-field">
+        <input type="url" id="addTweetInput" placeholder=" " autocomplete="off">
+        <label for="addTweetInput">ツイート（X）URL</label>
+      </div>
+      <div>
+        <div class="image-zone" id="addImageZone" tabindex="0">
+          <span class="ms placeholder-icon">image</span>
+          <span class="placeholder-text">画像なし</span>
+          <span class="placeholder-sub">クリックして選択 / ドラッグ＆ドロップ / 貼り付け(Ctrl+V)</span>
+        </div>
+        <input type="file" id="addImageInput" accept="image/*" class="visually-hidden">
+      </div>
+    </div>
+    <div class="dialog-actions">
+      <button type="button" class="btn btn-text" data-close-dialog>閉じる</button>
+      <button type="button" class="btn btn-filled" id="addCreateBtn"><span class="ms">add</span>追加</button>
+    </div>
+  </div>
+</dialog>
+
+<!-- ============ Settings dialog ============ -->
+<dialog id="settingsDialog" class="m3-dialog">
+  <div class="dialog-surface">
+    <div class="dialog-header">
+      <h2 class="dialog-title">設定</h2>
+      <button type="button" class="icon-button" data-close-dialog aria-label="閉じる"><span class="ms">close</span></button>
+    </div>
+    <div class="dialog-body">
+      <p style="font-size:13px; color:var(--md-on-surface-variant); margin:0;">
+        GitHub Personal Access Token（Contents への書き込み権限が必要）。この端末の localStorage にのみ保存されます。
+      </p>
+      <div class="text-field">
+        <input type="password" id="settingsTokenInput" placeholder=" " autocomplete="off">
+        <label for="settingsTokenInput">GitHub Personal Access Token</label>
+      </div>
+      <div class="text-field">
+        <input type="text" id="settingsOwnerInput" placeholder=" " autocomplete="off">
+        <label for="settingsOwnerInput">リポジトリ Owner</label>
+      </div>
+      <div class="text-field">
+        <input type="text" id="settingsRepoInput" placeholder=" " autocomplete="off">
+        <label for="settingsRepoInput">リポジトリ名</label>
+      </div>
+      <div class="text-field">
+        <input type="text" id="settingsBranchInput" placeholder=" " autocomplete="off">
+        <label for="settingsBranchInput">ブランチ</label>
+      </div>
+    </div>
+    <div class="dialog-actions">
+      <button type="button" class="btn btn-text" data-close-dialog>閉じる</button>
+      <button type="button" class="btn btn-filled" id="settingsSaveBtn"><span class="ms">save</span>保存</button>
+    </div>
+  </div>
+</dialog>
+
+<div id="snackbar" class="snackbar" role="status" aria-live="polite"></div>
+
+<script>
+(function(){
+"use strict";
+
+/* ============================================================
+   State
+   ============================================================ */
+var STATE = {
+  anniversary: "2026-09-26",
+  range: { from: "2025-08-01", to: "2026-09-30" },
+  events: [],
+  filter: "holiday", // "holiday" | "all"
+  currentEventId: null,   // event dialog target
+  pendingImageFile: null, // File pending upload (event dialog)
+  pendingImageFileAdd: null // File pending upload (add dialog)
+};
+
+var LS_KEYS = {
+  token: "vocabuki_gh_token",
+  owner: "vocabuki_gh_owner",
+  repo: "vocabuki_gh_repo",
+  branch: "vocabuki_gh_branch"
+};
+
+function getSettings(){
+  return {
+    token: localStorage.getItem(LS_KEYS.token) || "",
+    owner: localStorage.getItem(LS_KEYS.owner) || "vocabuki-io",
+    repo: localStorage.getItem(LS_KEYS.repo) || "Flyers",
+    branch: localStorage.getItem(LS_KEYS.branch) || "main"
+  };
+}
+function saveSettingsToStorage(s){
+  try{
+    localStorage.setItem(LS_KEYS.token, s.token || "");
+    localStorage.setItem(LS_KEYS.owner, s.owner || "vocabuki-io");
+    localStorage.setItem(LS_KEYS.repo, s.repo || "Flyers");
+    localStorage.setItem(LS_KEYS.branch, s.branch || "main");
+  }catch(e){ console.warn("localStorage unavailable", e); }
+}
+
+/* ============================================================
+   Utilities
+   ============================================================ */
+function escapeHtml(str){
+  return String(str == null ? "" : str).replace(/[&<>"']/g, function(c){
+    return { "&":"&amp;", "<":"&lt;", ">":"&gt;", '"':"&quot;", "'":"&#39;" }[c];
+  });
+}
+
+function todayJST(){
+  var fmt = new Intl.DateTimeFormat("en-CA", { timeZone: "Asia/Tokyo", year: "numeric", month: "2-digit", day: "2-digit" });
+  return fmt.format(new Date());
+}
+
+function daysUntil(dateStr, fromStr){
+  var a = new Date(dateStr + "T00:00:00Z");
+  var b = new Date(fromStr + "T00:00:00Z");
+  return Math.round((a - b) / 86400000);
+}
+
+function weekdayLabelJa(dateStr){
+  var days = ["日","月","火","水","木","金","土"];
+  var d = new Date(dateStr + "T00:00:00Z");
+  return days[d.getUTCDay()];
+}
+
+function monthLabel(ym){
+  var parts = ym.split("-");
+  return { year: parts[0], month: parseInt(parts[1], 10) };
+}
+
+function monthsInRange(fromYm, toYm){
+  var months = [];
+  var f = fromYm.split("-").map(Number);
+  var t = toYm.split("-").map(Number);
+  var y = f[0], m = f[1];
+  while (y < t[0] || (y === t[0] && m <= t[1])){
+    months.push(y + "-" + String(m).padStart(2, "0"));
+    m++;
+    if (m > 12){ m = 1; y++; }
+  }
+  return months;
+}
+
+function extFromMime(mime){
+  if (mime === "image/png") return "png";
+  if (mime === "image/webp") return "webp";
+  if (mime === "image/gif") return "gif";
+  return "jpg"; // covers image/jpeg and unknown fallback
+}
+
+function base64EncodeUtf8(str){
+  var bytes = new TextEncoder().encode(str);
+  var binary = "";
+  for (var i = 0; i < bytes.length; i++) binary += String.fromCharCode(bytes[i]);
+  return btoa(binary);
+}
+function decodeBase64Utf8(b64){
+  var binary = atob(String(b64).replace(/\n/g, ""));
+  var bytes = new Uint8Array(binary.length);
+  for (var i = 0; i < binary.length; i++) bytes[i] = binary.charCodeAt(i);
+  return new TextDecoder("utf-8").decode(bytes);
+}
+function arrayBufferToBase64(buf){
+  var bytes = new Uint8Array(buf);
+  var binary = "";
+  var chunk = 0x8000;
+  for (var i = 0; i < bytes.length; i += chunk){
+    binary += String.fromCharCode.apply(null, bytes.subarray(i, i + chunk));
+  }
+  return btoa(binary);
+}
+
+/* ============================================================
+   Snackbar
+   ============================================================ */
+var snackbarTimer = null;
+function showSnackbar(msg, isError){
+  var el = document.getElementById("snackbar");
+  el.textContent = msg;
+  el.classList.toggle("error", !!isError);
+  el.classList.add("visible");
+  clearTimeout(snackbarTimer);
+  snackbarTimer = setTimeout(function(){ el.classList.remove("visible"); }, 4200);
+}
+
+/* ============================================================
+   Data loading
+   ============================================================ */
+async function loadEventsData(){
+  var settings = getSettings();
+  if (settings.token){
+    try{
+      var url = "https://api.github.com/repos/" + encodeURIComponent(settings.owner) + "/" +
+                 encodeURIComponent(settings.repo) + "/contents/data/events.json?ref=" + encodeURIComponent(settings.branch);
+      var res = await fetch(url, {
+        headers: {
+          "Authorization": "Bearer " + settings.token,
+          "Accept": "application/vnd.github.raw+json"
+        }
+      });
+      if (!res.ok) throw new Error("GitHub fetch failed: " + res.status);
+      return await res.json();
+    }catch(err){
+      console.warn("GitHub Contents API fetch failed, falling back to relative fetch.", err);
+    }
+  }
+  var res2 = await fetch("data/events.json?t=" + Date.now());
+  if (!res2.ok) throw new Error("failed to load data/events.json: " + res2.status);
+  return await res2.json();
+}
+
+/* ============================================================
+   GitHub Contents API write helpers
+   ============================================================ */
+async function githubGetSha(path){
+  var settings = getSettings();
+  var url = "https://api.github.com/repos/" + encodeURIComponent(settings.owner) + "/" +
+             encodeURIComponent(settings.repo) + "/contents/" + path + "?ref=" + encodeURIComponent(settings.branch);
+  var res = await fetch(url, {
+    headers: {
+      "Authorization": "Bearer " + settings.token,
+      "Accept": "application/vnd.github+json"
+    }
+  });
+  if (res.status === 404) return null;
+  if (!res.ok) throw new Error("sha fetch failed: " + res.status);
+  return await res.json();
+}
+
+async function githubPutFile(path, base64Content, sha, message){
+  var settings = getSettings();
+  var url = "https://api.github.com/repos/" + encodeURIComponent(settings.owner) + "/" +
+             encodeURIComponent(settings.repo) + "/contents/" + path;
+  var body = { message: message, content: base64Content, branch: settings.branch };
+  if (sha) body.sha = sha;
+  var res = await fetch(url, {
+    method: "PUT",
+    headers: {
+      "Authorization": "Bearer " + settings.token,
+      "Accept": "application/vnd.github+json",
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify(body)
+  });
+  if (!res.ok){
+    var errText = "";
+    try{ errText = (await res.json()).message || ""; }catch(e){}
+    throw new Error("GitHub 保存失敗 (" + res.status + ") " + errText);
+  }
+  return await res.json();
+}
+
+/* Save an event (create/update). draft must include `id`. Returns updated events.json object. */
+async function persistEvent(draft, pendingFile, opts){
+  opts = opts || {};
+  var settings = getSettings();
+  if (!settings.token){
+    openSettingsDialog();
+    throw new Error("NO_TOKEN");
+  }
+
+  if (pendingFile){
+    var ext = extFromMime(pendingFile.type);
+    var imagePath = "images/" + draft.id + "." + ext;
+    var buf = await pendingFile.arrayBuffer();
+    var base64 = arrayBufferToBase64(buf);
+    var sha = null;
+    try{
+      var existing = await githubGetSha(imagePath);
+      if (existing) sha = existing.sha;
+    }catch(e){ /* ignore, treat as new file */ }
+    await githubPutFile(imagePath, base64, sha, "flyer: " + draft.date + " " + draft.title + " 画像");
+    draft.image = imagePath;
+  }
+
+  var dataFile = await githubGetSha("data/events.json");
+  if (!dataFile) throw new Error("data/events.json が見つかりません");
+  var currentJson = JSON.parse(decodeBase64Utf8(dataFile.content));
+
+  if (opts.deleteEvent){
+    currentJson.events = currentJson.events.filter(function(e){ return e.id !== draft.id; });
+  } else {
+    var idx = currentJson.events.findIndex(function(e){ return e.id === draft.id; });
+    if (idx >= 0){
+      currentJson.events[idx] = Object.assign({}, currentJson.events[idx], draft);
+    } else {
+      currentJson.events.push(draft);
+    }
+  }
+  currentJson.events.sort(function(a, b){
+    if (a.date !== b.date) return a.date < b.date ? -1 : 1;
+    return a.title.localeCompare(b.title, "ja");
+  });
+
+  var newContent = JSON.stringify(currentJson, null, 2) + "\n";
+  var newBase64 = base64EncodeUtf8(newContent);
+  var commitMsg = opts.deleteEvent
+    ? "flyer: delete " + draft.date + " " + draft.title
+    : "flyer: " + draft.date + " " + draft.title;
+  await githubPutFile("data/events.json", newBase64, dataFile.sha, commitMsg);
+
+  return currentJson;
+}
+
+/* ============================================================
+   Progress / countdown
+   ============================================================ */
+function updateHeaderStats(){
+  var holidayEvents = STATE.events.filter(function(e){ return e.holiday; });
+  var withImage = holidayEvents.filter(function(e){ return !!e.image; });
+  var total = holidayEvents.length;
+  var done = withImage.length;
+  document.getElementById("progressText").textContent =
+    "画像あり " + done + " / " + total + "（休日イベント）";
+  var pct = total > 0 ? Math.round((done / total) * 100) : 0;
+  document.getElementById("progressFill").style.width = pct + "%";
+
+  var today = todayJST();
+  var n = daysUntil(STATE.anniversary, today);
+  var countdownEl = document.getElementById("countdownText");
+  if (n > 0) countdownEl.textContent = "周年まであと " + n + " 日";
+  else if (n === 0) countdownEl.textContent = "本日、周年です！";
+  else countdownEl.textContent = "周年から " + (-n) + " 日経過";
+}
+
+/* ============================================================
+   Calendar rendering
+   ============================================================ */
+function eventsByDate(){
+  var map = {};
+  STATE.events.forEach(function(e){
+    (map[e.date] = map[e.date] || []).push(e);
+  });
+  return map;
+}
+
+function visibleEvents(list){
+  if (STATE.filter === "holiday") return list.filter(function(e){ return e.holiday; });
+  return list;
+}
+
+function chipMarkup(ev){
+  var hasImage = !!ev.image;
+  var dimClass = (STATE.filter === "all" && !ev.holiday) ? " dim" : "";
+  var cls = "event-chip " + (hasImage ? "has-image" : "no-image") + dimClass;
+  var inner;
+  if (hasImage){
+    inner =
+      '<span class="chip-thumb"><img src="' + escapeHtml(ev.image) + '" alt="" loading="lazy" ' +
+      'onerror="this.style.display=\'none\';this.closest(\'.event-chip\').classList.add(\'img-missing\')">' +
+      '<span class="deploy-note">デプロイ待ち</span></span>' +
+      '<span class="chip-text">' +
+        '<span class="chip-title">' + escapeHtml(ev.title) + '</span>' +
+        '<span class="chip-status"><span class="ms filled chip-icon">check_circle</span>保存済み</span>' +
+      '</span>';
+  } else {
+    inner =
+      '<span class="chip-text">' +
+        '<span class="chip-title">' + escapeHtml(ev.title) + '</span>' +
+        '<span class="chip-status">画像なし</span>' +
+      '</span>';
+  }
+  return '<button type="button" class="' + cls + '" data-event-id="' + escapeHtml(ev.id) + '">' + inner + '</button>';
+}
+
+function dayCellClasses(dateStr, dayEvents){
+  var d = new Date(dateStr + "T00:00:00Z");
+  var wd = d.getUTCDay(); // 0=Sun..6=Sat
+  var classes = ["day-cell"];
+  // Tint 金夜・土夜 (Fri/Sat) — the days the holiday rule is based on.
+  if (wd === 5 || wd === 6) classes.push("weekend");
+  if (dateStr === todayJST()) classes.push("today");
+  return classes.join(" ");
+}
+
+function renderMonthGrid(ym, byDate){
+  var parts = monthLabel(ym);
+  var year = parseInt(parts.year, 10), month = parts.month;
+  var firstOfMonth = new Date(Date.UTC(year, month - 1, 1));
+  var daysInMonth = new Date(Date.UTC(year, month, 0)).getUTCDate();
+  var offset = (firstOfMonth.getUTCDay() + 6) % 7; // Mon-start
+
+  var totalCells = offset + daysInMonth;
+  var totalRows = Math.ceil(totalCells / 7);
+  var totalSlots = totalRows * 7;
+
+  var html = '<div class="grid-header">' +
+    ["月","火","水","木","金","土","日"].map(function(l, i){
+      var cls = (i === 4 || i === 5) ? "sat" : (i === 6 ? "sun" : ""); // 金・土 highlighted (holiday rule), 日 dimmed
+      return '<span class="' + cls + '">' + l + '</span>';
+    }).join("") +
+    '</div><div class="grid-body">';
+
+  for (var i = 0; i < totalSlots; i++){
+    var dayNum = i - offset + 1;
+    if (dayNum < 1 || dayNum > daysInMonth){
+      html += '<div class="day-cell empty"></div>';
+      continue;
+    }
+    var dateStr = year + "-" + String(month).padStart(2, "0") + "-" + String(dayNum).padStart(2, "0");
+    var dayEvents = visibleEvents(byDate[dateStr] || []);
+    var cellClass = dayCellClasses(dateStr, byDate[dateStr] || []);
+    html += '<div class="' + cellClass + '" data-date="' + dateStr + '">' +
+      '<div class="day-num">' + dayNum + '</div>' +
+      '<div class="day-chips">' + dayEvents.map(chipMarkup).join("") + '</div>' +
+      '</div>';
+  }
+  html += '</div>';
+  return html;
+}
+
+function renderMonthList(ym, byDate){
+  var parts = monthLabel(ym);
+  var year = parseInt(parts.year, 10), month = parts.month;
+  var daysInMonth = new Date(Date.UTC(year, month, 0)).getUTCDate();
+  var rows = [];
+  for (var d = 1; d <= daysInMonth; d++){
+    var dateStr = year + "-" + String(month).padStart(2, "0") + "-" + String(d).padStart(2, "0");
+    var dayEvents = visibleEvents(byDate[dateStr] || []);
+    if (dayEvents.length === 0) continue;
+    var cellClass = dayCellClasses(dateStr, byDate[dateStr] || []).replace("day-cell", "list-day");
+    rows.push(
+      '<div class="' + cellClass + '">' +
+        '<div class="list-date">' + month + '/' + d + '（' + weekdayLabelJa(dateStr) + '）</div>' +
+        '<div class="list-chips">' + dayEvents.map(chipMarkup).join("") + '</div>' +
+      '</div>'
+    );
+  }
+  if (rows.length === 0){
+    return '<p class="empty-month-note">この月に表示するイベントはありません。</p>';
+  }
+  return rows.join("");
+}
+
+function renderCalendar(){
+  var byDate = eventsByDate();
+  var months = monthsInRange(STATE.range.from.slice(0, 7), STATE.range.to.slice(0, 7));
+  var root = document.getElementById("calendarRoot");
+  var html = "";
+  months.forEach(function(ym){
+    var parts = monthLabel(ym);
+    html += '<section class="month-section" id="month-' + ym + '">' +
+      '<h2 class="month-title"><span class="yr">' + parts.year + '年</span>' + parts.month + '月</h2>' +
+      '<div class="month-grid">' + renderMonthGrid(ym, byDate) + '</div>' +
+      '<div class="month-list">' + renderMonthList(ym, byDate) + '</div>' +
+      '</section>';
+  });
+  root.innerHTML = html;
+
+  // wire chip clicks
+  root.querySelectorAll("[data-event-id]").forEach(function(btn){
+    btn.addEventListener("click", function(){
+      openEventDialog(btn.getAttribute("data-event-id"));
+    });
+  });
+}
+
+function renderMonthChips(){
+  var months = monthsInRange(STATE.range.from.slice(0, 7), STATE.range.to.slice(0, 7));
+  var curYm = todayJST().slice(0, 7);
+  var row = document.getElementById("monthChipRow");
+  row.innerHTML = months.map(function(ym){
+    var parts = monthLabel(ym);
+    var cur = ym === curYm ? " current" : "";
+    return '<button type="button" class="month-chip' + cur + '" data-ym="' + ym + '">' + parts.year + '年' + parts.month + '月</button>';
+  }).join("");
+  row.querySelectorAll(".month-chip").forEach(function(chip){
+    chip.addEventListener("click", function(){
+      var ym = chip.getAttribute("data-ym");
+      var el = document.getElementById("month-" + ym);
+      if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+    });
+  });
+  return { months: months, curYm: curYm };
+}
+
+function scrollToCurrentMonth(months, curYm){
+  var target = months.indexOf(curYm) !== -1 ? curYm : months[0];
+  var el = document.getElementById("month-" + target);
+  if (el) el.scrollIntoView({ behavior: "instant" in window ? "instant" : "auto", block: "start" });
+}
+
+/* ============================================================
+   Filter segmented button
+   ============================================================ */
+function wireFilter(){
+  document.querySelectorAll(".segment").forEach(function(btn){
+    btn.addEventListener("click", function(){
+      document.querySelectorAll(".segment").forEach(function(b){ b.classList.remove("active"); });
+      btn.classList.add("active");
+      STATE.filter = btn.getAttribute("data-filter");
+      renderCalendar();
+    });
+  });
+}
+
+/* ============================================================
+   Switch component
+   ============================================================ */
+function wireSwitch(el){
+  el.addEventListener("click", function(){
+    var on = !el.classList.contains("on");
+    el.classList.toggle("on", on);
+    el.setAttribute("aria-checked", on ? "true" : "false");
+  });
+}
+function setSwitch(el, value){
+  el.classList.toggle("on", !!value);
+  el.setAttribute("aria-checked", value ? "true" : "false");
+}
+function getSwitch(el){
+  return el.classList.contains("on");
+}
+
+/* ============================================================
+   Text field floating label helper
+   ============================================================ */
+function wireFloatingLabel(input){
+  function sync(){
+    input.closest(".text-field").classList.toggle("has-value", !!input.value);
+  }
+  input.addEventListener("input", sync);
+  sync();
+}
+
+/* ============================================================
+   Image zone (shared logic for event & add dialogs)
+   ============================================================ */
+function setupImageZone(zoneEl, fileInputEl, onFileSelected){
+  zoneEl.addEventListener("click", function(){ fileInputEl.click(); });
+  zoneEl.addEventListener("keydown", function(e){
+    if (e.key === "Enter" || e.key === " "){ e.preventDefault(); fileInputEl.click(); }
+  });
+  fileInputEl.addEventListener("change", function(){
+    if (fileInputEl.files && fileInputEl.files[0]) onFileSelected(fileInputEl.files[0]);
+    fileInputEl.value = "";
+  });
+  zoneEl.addEventListener("dragover", function(e){ e.preventDefault(); zoneEl.classList.add("drag-over"); });
+  zoneEl.addEventListener("dragleave", function(){ zoneEl.classList.remove("drag-over"); });
+  zoneEl.addEventListener("drop", function(e){
+    e.preventDefault();
+    zoneEl.classList.remove("drag-over");
+    var file = e.dataTransfer.files && e.dataTransfer.files[0];
+    if (file && file.type.indexOf("image/") === 0) onFileSelected(file);
+  });
+}
+
+function handlePasteOnDialog(dialogEl, onFileSelected){
+  dialogEl.addEventListener("paste", function(e){
+    var active = document.activeElement;
+    if (active && (active.tagName === "INPUT" || active.tagName === "TEXTAREA") && active.type !== "file"){
+      // allow normal text paste unless clipboard actually only carries an image
+      var hasText = Array.prototype.some.call(e.clipboardData.items, function(it){ return it.kind === "string" && it.type === "text/plain"; });
+      if (hasText) return;
+    }
+    var items = e.clipboardData ? e.clipboardData.items : [];
+    for (var i = 0; i < items.length; i++){
+      if (items[i].kind === "file" && items[i].type.indexOf("image/") === 0){
+        var file = items[i].getAsFile();
+        if (file){
+          e.preventDefault();
+          onFileSelected(file);
+          return;
+        }
+      }
+    }
+  });
+}
+
+function renderImagePreview(zoneEl, url, deployPending){
+  zoneEl.classList.add("has-image");
+  zoneEl.innerHTML =
+    (deployPending ? '<span class="deploy-pill">デプロイ待ち</span>' : "") +
+    '<img src="' + url + '" alt="" onerror="this.style.opacity=0.3">';
+}
+function renderImagePlaceholder(zoneEl){
+  zoneEl.classList.remove("has-image");
+  zoneEl.innerHTML =
+    '<span class="ms placeholder-icon">image</span>' +
+    '<span class="placeholder-text">画像なし</span>' +
+    '<span class="placeholder-sub">クリックして選択 / ドラッグ＆ドロップ / 貼り付け(Ctrl+V)</span>';
+}
+
+/* ============================================================
+   Event dialog
+   ============================================================ */
+var eventDialogEl = document.getElementById("eventDialog");
+var eventImageZone = document.getElementById("eventImageZone");
+var eventImageInput = document.getElementById("eventImageInput");
+var eventTitleInput = document.getElementById("eventTitleInput");
+var eventTweetInput = document.getElementById("eventTweetInput");
+var eventHolidaySwitch = document.getElementById("eventHolidaySwitch");
+var eventTweetOpen = document.getElementById("eventTweetOpen");
+var eventDeleteEventBtn = document.getElementById("eventDeleteEventBtn");
+
+function findEvent(id){
+  return STATE.events.find(function(e){ return e.id === id; });
+}
+
+function openEventDialog(id){
+  var ev = findEvent(id);
+  if (!ev) return;
+  STATE.currentEventId = id;
+  STATE.pendingImageFile = null;
+
+  document.getElementById("eventDialogDate").textContent =
+    ev.date + "（" + weekdayLabelJa(ev.date) + "）";
+  eventTitleInput.value = ev.title;
+  wireFloatingLabel(eventTitleInput);
+  eventTweetInput.value = ev.tweetUrl || "";
+  wireFloatingLabel(eventTweetInput);
+  setSwitch(eventHolidaySwitch, ev.holiday);
+
+  if (ev.tweetUrl){
+    eventTweetOpen.href = ev.tweetUrl;
+    eventTweetOpen.style.display = "flex";
+  } else {
+    eventTweetOpen.style.display = "none";
+  }
+
+  if (ev.image){
+    renderImagePreview(eventImageZone, ev.image, false);
+  } else {
+    renderImagePlaceholder(eventImageZone);
+  }
+
+  eventDeleteEventBtn.style.display = ev.source === "manual" ? "inline-flex" : "none";
+
+  eventDialogEl.showModal();
+}
+
+eventTweetInput.addEventListener("input", function(){
+  if (eventTweetInput.value){
+    eventTweetOpen.href = eventTweetInput.value;
+    eventTweetOpen.style.display = "flex";
+  } else {
+    eventTweetOpen.style.display = "none";
+  }
+});
+
+setupImageZone(eventImageZone, eventImageInput, function(file){
+  STATE.pendingImageFile = file;
+  var url = URL.createObjectURL(file);
+  renderImagePreview(eventImageZone, url, false);
+});
+handlePasteOnDialog(eventDialogEl, function(file){
+  STATE.pendingImageFile = file;
+  var url = URL.createObjectURL(file);
+  renderImagePreview(eventImageZone, url, false);
+});
+
+document.getElementById("eventDeleteImageBtn").addEventListener("click", function(){
+  STATE.pendingImageFile = null;
+  renderImagePlaceholder(eventImageZone);
+  eventImageZone.dataset.cleared = "1";
+});
+
+wireSwitch(eventHolidaySwitch);
+
+document.getElementById("eventSaveBtn").addEventListener("click", async function(){
+  var settings = getSettings();
+  if (!settings.token){ openSettingsDialog(); return; }
+
+  var ev = findEvent(STATE.currentEventId);
+  if (!ev) return;
+
+  var draft = {
+    id: ev.id,
+    date: ev.date,
+    title: eventTitleInput.value.trim() || ev.title,
+    holiday: getSwitch(eventHolidaySwitch),
+    source: ev.source,
+    tweetUrl: eventTweetInput.value.trim() || null,
+    note: ev.note || ""
+  };
+  if (ev.gcalId) draft.gcalId = ev.gcalId;
+  draft.image = eventImageZone.dataset.cleared === "1" ? null : ev.image;
+
+  var btn = this;
+  btn.disabled = true;
+  try{
+    var updated = await persistEvent(draft, STATE.pendingImageFile, {});
+    STATE.events = updated.events;
+    updateHeaderStats();
+    renderCalendar();
+    showSnackbar("保存しました: " + draft.title);
+    eventDialogEl.close();
+  }catch(err){
+    if (String(err.message) !== "NO_TOKEN") showSnackbar("保存に失敗しました: " + err.message, true);
+    console.error(err);
+  }finally{
+    btn.disabled = false;
+    delete eventImageZone.dataset.cleared;
+  }
+});
+
+eventDeleteEventBtn.addEventListener("click", async function(){
+  var ev = findEvent(STATE.currentEventId);
+  if (!ev) return;
+  if (!confirm('「' + ev.title + '」を削除しますか？（画像ファイル自体は残ります）')) return;
+  var settings = getSettings();
+  if (!settings.token){ openSettingsDialog(); return; }
+
+  var btn = this;
+  btn.disabled = true;
+  try{
+    var updated = await persistEvent({ id: ev.id, date: ev.date, title: ev.title }, null, { deleteEvent: true });
+    STATE.events = updated.events;
+    updateHeaderStats();
+    renderCalendar();
+    showSnackbar("削除しました: " + ev.title);
+    eventDialogEl.close();
+  }catch(err){
+    if (String(err.message) !== "NO_TOKEN") showSnackbar("削除に失敗しました: " + err.message, true);
+    console.error(err);
+  }finally{
+    btn.disabled = false;
+  }
+});
+
+/* ============================================================
+   Add event dialog
+   ============================================================ */
+var addDialogEl = document.getElementById("addDialog");
+var addImageZone = document.getElementById("addImageZone");
+var addImageInput = document.getElementById("addImageInput");
+var addDateInput = document.getElementById("addDateInput");
+var addTitleInput = document.getElementById("addTitleInput");
+var addTweetInput = document.getElementById("addTweetInput");
+var addHolidaySwitch = document.getElementById("addHolidaySwitch");
+
+function openAddDialog(){
+  STATE.pendingImageFileAdd = null;
+  var today = todayJST();
+  var def = (today >= STATE.range.from && today <= STATE.range.to) ? today : STATE.range.from;
+  addDateInput.value = def;
+  addTitleInput.value = "";
+  wireFloatingLabel(addTitleInput);
+  addTweetInput.value = "";
+  wireFloatingLabel(addTweetInput);
+  setSwitch(addHolidaySwitch, true);
+  renderImagePlaceholder(addImageZone);
+  addDialogEl.showModal();
+}
+
+document.getElementById("addFab").addEventListener("click", openAddDialog);
+
+setupImageZone(addImageZone, addImageInput, function(file){
+  STATE.pendingImageFileAdd = file;
+  var url = URL.createObjectURL(file);
+  renderImagePreview(addImageZone, url, false);
+});
+handlePasteOnDialog(addDialogEl, function(file){
+  STATE.pendingImageFileAdd = file;
+  var url = URL.createObjectURL(file);
+  renderImagePreview(addImageZone, url, false);
+});
+
+wireSwitch(addHolidaySwitch);
+
+function slugifyClient(title){
+  var normalized = title.normalize("NFKD").replace(/[̀-ͯ]/g, "");
+  var ascii = normalized.replace(/[^\x00-\x7F]/g, "");
+  var slug = ascii.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "").replace(/-{2,}/g, "-");
+  if (!slug){
+    var hash = 0;
+    for (var i = 0; i < title.length; i++){ hash = ((hash << 5) - hash + title.charCodeAt(i)) | 0; }
+    slug = Math.abs(hash).toString(16).slice(0, 6).padStart(6, "0");
+  }
+  return slug;
+}
+
+document.getElementById("addCreateBtn").addEventListener("click", async function(){
+  var settings = getSettings();
+  if (!settings.token){ openSettingsDialog(); return; }
+
+  var date = addDateInput.value;
+  var title = addTitleInput.value.trim();
+  if (!date || !title){
+    showSnackbar("日付とタイトルを入力してください", true);
+    return;
+  }
+  var id = date + "-" + slugifyClient(title);
+  if (findEvent(id)){
+    showSnackbar("同じIDのイベントが既に存在します（日付/タイトルを変えてください）", true);
+    return;
+  }
+
+  var draft = {
+    id: id,
+    date: date,
+    title: title,
+    holiday: getSwitch(addHolidaySwitch),
+    source: "manual",
+    tweetUrl: addTweetInput.value.trim() || null,
+    image: null,
+    note: ""
+  };
+
+  var btn = this;
+  btn.disabled = true;
+  try{
+    var updated = await persistEvent(draft, STATE.pendingImageFileAdd, {});
+    STATE.events = updated.events;
+    updateHeaderStats();
+    renderCalendar();
+    showSnackbar("追加しました: " + draft.title);
+    addDialogEl.close();
+  }catch(err){
+    if (String(err.message) !== "NO_TOKEN") showSnackbar("追加に失敗しました: " + err.message, true);
+    console.error(err);
+  }finally{
+    btn.disabled = false;
+  }
+});
+
+/* ============================================================
+   Settings dialog
+   ============================================================ */
+var settingsDialogEl = document.getElementById("settingsDialog");
+var settingsTokenInput = document.getElementById("settingsTokenInput");
+var settingsOwnerInput = document.getElementById("settingsOwnerInput");
+var settingsRepoInput = document.getElementById("settingsRepoInput");
+var settingsBranchInput = document.getElementById("settingsBranchInput");
+
+function openSettingsDialog(){
+  var s = getSettings();
+  settingsTokenInput.value = s.token;
+  settingsOwnerInput.value = s.owner;
+  settingsRepoInput.value = s.repo;
+  settingsBranchInput.value = s.branch;
+  [settingsTokenInput, settingsOwnerInput, settingsRepoInput, settingsBranchInput].forEach(wireFloatingLabel);
+  settingsDialogEl.showModal();
+}
+document.getElementById("settingsBtn").addEventListener("click", openSettingsDialog);
+
+document.getElementById("settingsSaveBtn").addEventListener("click", async function(){
+  var s = {
+    token: settingsTokenInput.value.trim(),
+    owner: settingsOwnerInput.value.trim() || "vocabuki-io",
+    repo: settingsRepoInput.value.trim() || "Flyers",
+    branch: settingsBranchInput.value.trim() || "main"
+  };
+  saveSettingsToStorage(s);
+  showSnackbar("設定を保存しました");
+  settingsDialogEl.close();
+  try{
+    await bootstrap(false);
+  }catch(e){ console.error(e); }
+});
+
+/* ============================================================
+   Dialog close wiring (X buttons, 閉じる buttons, backdrop click)
+   ============================================================ */
+document.querySelectorAll("dialog.m3-dialog").forEach(function(dlg){
+  dlg.querySelectorAll("[data-close-dialog]").forEach(function(btn){
+    btn.addEventListener("click", function(){ dlg.close(); });
+  });
+  dlg.addEventListener("click", function(e){
+    if (e.target === dlg) dlg.close();
+  });
+  dlg.addEventListener("close", function(){
+    if (dlg === eventDialogEl) STATE.pendingImageFile = null;
+    if (dlg === addDialogEl) STATE.pendingImageFileAdd = null;
+  });
+});
+
+/* ============================================================
+   Bootstrap
+   ============================================================ */
+async function bootstrap(scrollToMonth){
+  try{
+    var data = await loadEventsData();
+    STATE.anniversary = data.anniversary || STATE.anniversary;
+    STATE.range = data.range || STATE.range;
+    STATE.events = data.events || [];
+  }catch(err){
+    console.error("Failed to load events data", err);
+    showSnackbar("イベントデータの読み込みに失敗しました", true);
+    STATE.events = [];
+  }
+  updateHeaderStats();
+  var chipInfo = renderMonthChips();
+  renderCalendar();
+  if (scrollToMonth) scrollToCurrentMonth(chipInfo.months, chipInfo.curYm);
+}
+
+/* Keep sticky offsets in sync with the real header height (title wraps on narrow screens). */
+function syncStickyOffsets(){
+  var bar = document.querySelector(".app-bar");
+  var row = document.getElementById("monthChipRow");
+  if (bar) document.documentElement.style.setProperty("--appbar-h", bar.offsetHeight + "px");
+  if (row) document.documentElement.style.setProperty("--chiprow-h", row.offsetHeight + "px");
+}
+if (window.ResizeObserver){
+  var ro = new ResizeObserver(syncStickyOffsets);
+  ro.observe(document.querySelector(".app-bar"));
+  ro.observe(document.getElementById("monthChipRow"));
+}
+window.addEventListener("resize", syncStickyOffsets);
+syncStickyOffsets();
+
+wireFilter();
+bootstrap(true);
+
+})();
+</script>
+</body>
+</html>
