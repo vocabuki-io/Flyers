@@ -422,6 +422,10 @@ a{ color: var(--md-primary); }
 .event-chip.has-image:hover{ box-shadow: 0 3px 8px rgba(0,0,0,0.16); }
 .event-chip.dim{ opacity: 0.42; }
 .event-chip.img-missing{ background: var(--md-surface-container-high); color: var(--md-on-surface-variant); }
+.event-chip.saving{ opacity: .75; animation: pulse 1.2s ease-in-out infinite; }
+.event-chip.save-failed{ border: 2px solid var(--md-error); }
+.event-chip.save-failed .chip-status{ color: var(--md-error); }
+@keyframes pulse{ 0%,100%{ opacity:.75 } 50%{ opacity:.45 } }
 
 .chip-thumb{
   width: 24px; height: 24px;
@@ -975,6 +979,24 @@ function extFromMime(mime){
   return "jpg"; // covers image/jpeg and unknown fallback
 }
 
+/* Clipboard/screenshot images arrive as PNG (often 3-8 MB). Re-encode to JPEG at the
+   same pixel size when that is smaller — resolution is kept because these get printed. */
+async function optimizeImage(file){
+  if (!file || file.type === "image/gif") return file;
+  if (file.type === "image/jpeg" && file.size < 1500000) return file;
+  try{
+    var bmp = await createImageBitmap(file);
+    var canvas = document.createElement("canvas");
+    canvas.width = bmp.width; canvas.height = bmp.height;
+    var ctx = canvas.getContext("2d");
+    ctx.fillStyle = "#fff"; ctx.fillRect(0, 0, canvas.width, canvas.height);
+    ctx.drawImage(bmp, 0, 0);
+    var blob = await new Promise(function(res){ canvas.toBlob(res, "image/jpeg", 0.9); });
+    if (blob && blob.size < file.size * 0.85) return new File([blob], "image.jpg", { type: "image/jpeg" });
+  }catch(e){ console.warn("image optimize skipped", e); }
+  return file;
+}
+
 function base64EncodeUtf8(str){
   var bytes = new TextEncoder().encode(str);
   var binary = "";
@@ -1086,32 +1108,41 @@ async function persistEvent(draft, pendingFile, opts){
     throw new Error("NO_TOKEN");
   }
 
+  // Read events.json metadata in parallel with the image upload (independent files).
+  var dataFilePromise = githubGetSha("data/events.json");
+
   if (pendingFile){
+    pendingFile = await optimizeImage(pendingFile);
     var ext = extFromMime(pendingFile.type);
     var imagePath = "images/" + draft.id + "." + ext;
     var buf = await pendingFile.arrayBuffer();
     var base64 = arrayBufferToBase64(buf);
     var sha = null;
-    try{
-      var existing = await githubGetSha(imagePath);
-      if (existing) sha = existing.sha;
-    }catch(e){ /* ignore, treat as new file */ }
+    if (opts.previousImage === imagePath){
+      // Overwriting an existing file needs its blob sha; a brand-new file does not.
+      try{
+        var existing = await githubGetSha(imagePath);
+        if (existing) sha = existing.sha;
+      }catch(e){ /* ignore, treat as new file */ }
+    }
     await githubPutFile(imagePath, base64, sha, "flyer: " + draft.date + " " + draft.title + " 画像");
     draft.image = imagePath;
   }
 
-  var dataFile = await githubGetSha("data/events.json");
+  var dataFile = await dataFilePromise;
   if (!dataFile) throw new Error("data/events.json が見つかりません");
   var currentJson = JSON.parse(decodeBase64Utf8(dataFile.content));
 
   if (opts.deleteEvent){
     currentJson.events = currentJson.events.filter(function(e){ return e.id !== draft.id; });
   } else {
+    var clean = {};
+    Object.keys(draft).forEach(function(k){ if (k.charAt(0) !== "_") clean[k] = draft[k]; });
     var idx = currentJson.events.findIndex(function(e){ return e.id === draft.id; });
     if (idx >= 0){
-      currentJson.events[idx] = Object.assign({}, currentJson.events[idx], draft);
+      currentJson.events[idx] = Object.assign({}, currentJson.events[idx], clean);
     } else {
-      currentJson.events.push(draft);
+      currentJson.events.push(clean);
     }
   }
   currentJson.events.sort(function(a, b){
@@ -1127,6 +1158,65 @@ async function persistEvent(draft, pendingFile, opts){
   await githubPutFile("data/events.json", newBase64, dataFile.sha, commitMsg);
 
   return currentJson;
+}
+
+/* ============================================================
+   Background save queue (dialog closes immediately; saves run one at a time
+   so the events.json read-modify-write never races with itself)
+   ============================================================ */
+var saveChain = Promise.resolve();
+function applyLocal(draft, previewUrl){
+  var ev = findEvent(draft.id);
+  if (!ev){ ev = {}; STATE.events.push(ev); }
+  Object.assign(ev, draft);
+  if (previewUrl) ev._previewUrl = previewUrl;
+  ev._saving = true; ev._error = null;
+  STATE.events.sort(function(a, b){
+    if (a.date !== b.date) return a.date < b.date ? -1 : 1;
+    return a.title.localeCompare(b.title, "ja");
+  });
+  updateHeaderStats(); renderCalendar();
+}
+function mergeServerEvents(serverEvents){
+  var local = {};
+  STATE.events.forEach(function(e){ local[e.id] = e; });
+  STATE.events = serverEvents.map(function(se){
+    var le = local[se.id];
+    if (!le) return se;
+    // keep transient client state (preview, in-flight flags) on top of server truth
+    var out = Object.assign({}, se);
+    Object.keys(le).forEach(function(k){ if (k.charAt(0) === "_") out[k] = le[k]; });
+    if (le._saving) Object.assign(out, le._draft || {});
+    return out;
+  });
+  // events created locally that the server does not know yet (still queued)
+  Object.keys(local).forEach(function(id){
+    if ((local[id]._saving || local[id]._error) && !STATE.events.some(function(e){ return e.id === id; })) STATE.events.push(local[id]);
+  });
+}
+function queueSave(draft, pendingFile, previewUrl, previousImage, verb){
+  var ev = findEvent(draft.id) || {};
+  var snapshot = Object.assign({}, draft);
+  applyLocal(draft, previewUrl);
+  ev = findEvent(draft.id);
+  ev._draft = snapshot; ev._pendingFile = pendingFile || null;
+  showSnackbar(verb + "中: " + draft.title);
+  saveChain = saveChain.catch(function(){}).then(async function(){
+    try{
+      var updated = await persistEvent(Object.assign({}, snapshot), pendingFile, { previousImage: previousImage });
+      var cur = findEvent(draft.id);
+      if (cur){ cur._saving = false; cur._draft = null; cur._pendingFile = null; }
+      mergeServerEvents(updated.events);
+      updateHeaderStats(); renderCalendar();
+      showSnackbar(verb + "しました: " + draft.title);
+    }catch(err){
+      var cur2 = findEvent(draft.id);
+      if (cur2){ cur2._saving = false; cur2._error = err.message; }
+      renderCalendar();
+      showSnackbar(verb + "に失敗: " + draft.title + " — " + err.message + "（開いて再保存）", true);
+      console.error(err);
+    }
+  });
 }
 
 /* ============================================================
@@ -1171,22 +1261,24 @@ function visibleEvents(list){
 function chipMarkup(ev){
   var hasImage = !!ev.image;
   var dimClass = (STATE.filter === "all" && !ev.holiday) ? " dim" : "";
-  var cls = "event-chip " + (hasImage ? "has-image" : "no-image") + dimClass;
+  var cls = "event-chip " + (hasImage ? "has-image" : "no-image") + dimClass +
+            (ev._saving ? " saving" : "") + (ev._error ? " save-failed" : "");
   var inner;
   if (hasImage){
     inner =
-      '<span class="chip-thumb"><img src="' + escapeHtml(ev.image) + '" alt="" loading="lazy" ' +
+      '<span class="chip-thumb"><img src="' + escapeHtml(ev._previewUrl || ev.image) + '" alt="" loading="lazy" ' +
       'onerror="this.style.display=\'none\';this.closest(\'.event-chip\').classList.add(\'img-missing\')">' +
       '<span class="deploy-note">デプロイ待ち</span></span>' +
       '<span class="chip-text">' +
         '<span class="chip-title">' + escapeHtml(ev.title) + '</span>' +
-        '<span class="chip-status"><span class="ms filled chip-icon">check_circle</span>保存済み</span>' +
+        '<span class="chip-status">' + (ev._saving ? "保存中…" : ev._error ? "保存失敗・タップで再試行" :
+          '<span class="ms filled chip-icon">check_circle</span>保存済み') + '</span>' +
       '</span>';
   } else {
     inner =
       '<span class="chip-text">' +
         '<span class="chip-title">' + escapeHtml(ev.title) + '</span>' +
-        '<span class="chip-status">画像なし</span>' +
+        '<span class="chip-status">' + (ev._saving ? "保存中…" : ev._error ? "保存失敗・タップで再試行" : "画像なし") + '</span>' +
       '</span>';
   }
   return '<button type="button" class="' + cls + '" data-event-id="' + escapeHtml(ev.id) + '">' + inner + '</button>';
@@ -1484,8 +1576,11 @@ function openEventDialog(id){
     eventTweetOpen.style.display = "none";
   }
 
-  if (ev.image){
-    renderImagePreview(eventImageZone, ev.image, false);
+  if (ev._pendingFile && ev._error){
+    STATE.pendingImageFile = ev._pendingFile;
+    renderImagePreview(eventImageZone, ev._previewUrl, false);
+  } else if (ev.image){
+    renderImagePreview(eventImageZone, ev._previewUrl || ev.image, false);
   } else {
     renderImagePlaceholder(eventImageZone);
   }
@@ -1542,22 +1637,12 @@ document.getElementById("eventSaveBtn").addEventListener("click", async function
   if (ev.gcalId) draft.gcalId = ev.gcalId;
   draft.image = eventImageZone.dataset.cleared === "1" ? null : ev.image;
 
-  var btn = this;
-  btn.disabled = true;
-  try{
-    var updated = await persistEvent(draft, STATE.pendingImageFile, {});
-    STATE.events = updated.events;
-    updateHeaderStats();
-    renderCalendar();
-    showSnackbar("保存しました: " + draft.title);
-    eventDialogEl.close();
-  }catch(err){
-    if (String(err.message) !== "NO_TOKEN") showSnackbar("保存に失敗しました: " + err.message, true);
-    console.error(err);
-  }finally{
-    btn.disabled = false;
-    delete eventImageZone.dataset.cleared;
-  }
+  var file = STATE.pendingImageFile;
+  var previewUrl = file ? URL.createObjectURL(file) : (draft.image ? (ev._previewUrl || null) : null);
+  if (file) draft.image = "images/" + draft.id + "." + extFromMime(file.type); // provisional; server path wins
+  delete eventImageZone.dataset.cleared;
+  eventDialogEl.close();
+  queueSave(draft, file, previewUrl, ev.image, "保存");
 });
 
 eventDeleteEventBtn.addEventListener("click", async function(){
@@ -1571,7 +1656,7 @@ eventDeleteEventBtn.addEventListener("click", async function(){
   btn.disabled = true;
   try{
     var updated = await persistEvent({ id: ev.id, date: ev.date, title: ev.title }, null, { deleteEvent: true });
-    STATE.events = updated.events;
+    mergeServerEvents(updated.events);
     updateHeaderStats();
     renderCalendar();
     showSnackbar("削除しました: " + ev.title);
@@ -1665,21 +1750,11 @@ document.getElementById("addCreateBtn").addEventListener("click", async function
     note: ""
   };
 
-  var btn = this;
-  btn.disabled = true;
-  try{
-    var updated = await persistEvent(draft, STATE.pendingImageFileAdd, {});
-    STATE.events = updated.events;
-    updateHeaderStats();
-    renderCalendar();
-    showSnackbar("追加しました: " + draft.title);
-    addDialogEl.close();
-  }catch(err){
-    if (String(err.message) !== "NO_TOKEN") showSnackbar("追加に失敗しました: " + err.message, true);
-    console.error(err);
-  }finally{
-    btn.disabled = false;
-  }
+  var file = STATE.pendingImageFileAdd;
+  var previewUrl = file ? URL.createObjectURL(file) : null;
+  if (file) draft.image = "images/" + draft.id + "." + extFromMime(file.type);
+  addDialogEl.close();
+  queueSave(draft, file, previewUrl, null, "追加");
 });
 
 /* ============================================================
@@ -1767,6 +1842,10 @@ if (window.ResizeObserver){
 }
 window.addEventListener("resize", syncStickyOffsets);
 syncStickyOffsets();
+
+window.addEventListener("beforeunload", function(e){
+  if (STATE.events.some(function(ev){ return ev._saving; })){ e.preventDefault(); e.returnValue = ""; }
+});
 
 wireFilter();
 bootstrap(true);
