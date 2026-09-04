@@ -222,6 +222,38 @@ a{ color: var(--md-primary); }
 }
 
 .filter-row{ margin-top: 16px; }
+.filter-chips{ display:flex; gap:8px; flex-wrap:wrap; margin-top:10px; }
+.filter-chip{
+  display:inline-flex; align-items:center; gap:4px;
+  border-radius: 12px;
+  border: 1px solid var(--md-outline-variant);
+  background: var(--md-surface-container-low);
+  color: var(--md-on-surface-variant);
+  padding: 7px 14px; font-size: 13px; font-weight: 600; cursor: pointer;
+  transition: background-color 220ms var(--ease-emphasized), color 220ms var(--ease-emphasized), transform 150ms var(--ease-emphasized);
+}
+.filter-chip:active{ transform: scale(0.94); }
+.filter-chip .ms{ font-size: 18px; display:none; }
+.filter-chip.active{ background: var(--md-secondary-container); color: var(--md-on-secondary-container); border-color: transparent; }
+.filter-chip.active .ms{ display:inline-block; }
+
+/* Tap-to-paste URL control (replaces the URL text field) */
+.paste-url{
+  flex: 1; min-width: 0;
+  display:flex; align-items:center; gap:10px;
+  border-radius: 16px;
+  border: 1px dashed var(--md-outline);
+  background: var(--md-surface-container-low);
+  color: var(--md-on-surface-variant);
+  padding: 12px 14px; font-size: 14px; font-weight: 600; cursor: pointer; text-align:left;
+  transition: background-color 220ms var(--ease-emphasized), border-color 220ms var(--ease-emphasized);
+}
+.paste-url:hover{ background: var(--md-surface-container-high); }
+.paste-url.has-value{ border-style: solid; border-color: transparent; background: var(--md-secondary-container); color: var(--md-on-secondary-container); }
+.paste-url .ms{ font-size: 20px; flex-shrink:0; }
+.paste-url .paste-text{ overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.paste-url .paste-hint{ font-size: 11px; font-weight: 500; opacity: .75; flex-shrink:0; }
+
 .filter-hint{
   margin: 8px 2px 0;
   font-size: 11px;
@@ -713,6 +745,10 @@ dialog.m3-dialog[open]{
       <button type="button" class="segment active" data-filter="holiday"><span class="ms">check</span>休日のみ</button>
       <button type="button" class="segment" data-filter="all"><span class="ms">check</span>すべて</button>
     </div>
+    <div class="filter-chips" role="group" aria-label="未完了フィルタ">
+      <button type="button" class="filter-chip" data-missing="image"><span class="ms">check</span>画像なし</button>
+      <button type="button" class="filter-chip" data-missing="url"><span class="ms">check</span>URLなし</button>
+    </div>
     <p class="filter-hint">休日イベント = 金夜・土夜開催（カレンダー上は色付きの日）。イベントごとにスイッチで個別に変更できます。</p>
   </div>
 </header>
@@ -745,10 +781,8 @@ dialog.m3-dialog[open]{
         <button type="button" class="switch" id="eventHolidaySwitch" role="switch" aria-checked="false"><span class="knob"></span></button>
       </div>
       <div class="text-field-row">
-        <div class="text-field">
-          <input type="url" id="eventTweetInput" placeholder=" " autocomplete="off">
-          <label for="eventTweetInput">ツイート（X）URL</label>
-        </div>
+        <input type="hidden" id="eventTweetInput">
+        <button type="button" class="paste-url" id="eventTweetPaste" aria-label="ツイートURLを貼り付け"><span class="ms">content_paste</span><span class="paste-text">タップしてURLを貼り付け</span></button>
         <a href="#" target="_blank" rel="noopener noreferrer" class="open-link" id="eventTweetOpen" style="display:none;" aria-label="ツイートを開く"><span class="ms">open_in_new</span></a>
       </div>
       <div>
@@ -791,9 +825,9 @@ dialog.m3-dialog[open]{
         <span class="switch-label">休日イベント</span>
         <button type="button" class="switch on" id="addHolidaySwitch" role="switch" aria-checked="true"><span class="knob"></span></button>
       </div>
-      <div class="text-field">
-        <input type="url" id="addTweetInput" placeholder=" " autocomplete="off">
-        <label for="addTweetInput">ツイート（X）URL</label>
+      <div class="text-field-row">
+        <input type="hidden" id="addTweetInput">
+        <button type="button" class="paste-url" id="addTweetPaste" aria-label="ツイートURLを貼り付け"><span class="ms">content_paste</span><span class="paste-text">タップしてURLを貼り付け</span></button>
       </div>
       <div>
         <div class="image-zone" id="addImageZone" tabindex="0">
@@ -860,6 +894,7 @@ var STATE = {
   range: { from: "2025-08-01", to: "2026-09-30" },
   events: [],
   filter: "holiday", // "holiday" | "all"
+  missing: { image: false, url: false }, // extra filters: show only events lacking these
   currentEventId: null,   // event dialog target
   pendingImageFile: null, // File pending upload (event dialog)
   pendingImageFileAdd: null // File pending upload (add dialog)
@@ -1127,7 +1162,9 @@ function eventsByDate(){
 }
 
 function visibleEvents(list){
-  if (STATE.filter === "holiday") return list.filter(function(e){ return e.holiday; });
+  if (STATE.filter === "holiday") list = list.filter(function(e){ return e.holiday; });
+  if (STATE.missing.image) list = list.filter(function(e){ return !e.image; });
+  if (STATE.missing.url) list = list.filter(function(e){ return !e.tweetUrl; });
   return list;
 }
 
@@ -1284,6 +1321,41 @@ function wireFilter(){
       renderCalendar();
     });
   });
+  document.querySelectorAll(".filter-chip").forEach(function(chip){
+    chip.addEventListener("click", function(){
+      var key = chip.getAttribute("data-missing");
+      STATE.missing[key] = !STATE.missing[key];
+      chip.classList.toggle("active", STATE.missing[key]);
+      renderCalendar();
+    });
+  });
+}
+
+/* ============================================================
+   Tap-to-paste URL control
+   ============================================================ */
+function looksLikeUrl(t){ return /^https?:\/\/\S+$/i.test(t); }
+function renderPasteUrl(btn, value){
+  var text = btn.querySelector(".paste-text");
+  btn.classList.toggle("has-value", !!value);
+  text.textContent = value ? value.replace(/^https?:\/\/(www\.)?/i, "") : "タップしてURLを貼り付け";
+  btn.title = value ? value + "（タップで貼り直し）" : "";
+}
+async function readClipboardText(){
+  if (navigator.clipboard && navigator.clipboard.readText){
+    try{ return (await navigator.clipboard.readText()) || ""; }catch(e){ /* denied or unsupported */ }
+  }
+  return window.prompt("URLを貼り付けてください") || "";
+}
+function wirePasteUrl(btn, input){
+  btn.addEventListener("click", async function(){
+    var t = (await readClipboardText()).trim();
+    if (!t) { showSnackbar("クリップボードが空です", true); return; }
+    if (!looksLikeUrl(t)) { showSnackbar("URLではないみたい: " + t.slice(0, 40), true); return; }
+    input.value = t;
+    input.dispatchEvent(new Event("input"));
+    renderPasteUrl(btn, t);
+  });
 }
 
 /* ============================================================
@@ -1381,6 +1453,8 @@ var eventImageZone = document.getElementById("eventImageZone");
 var eventImageInput = document.getElementById("eventImageInput");
 var eventTitleInput = document.getElementById("eventTitleInput");
 var eventTweetInput = document.getElementById("eventTweetInput");
+var eventTweetPaste = document.getElementById("eventTweetPaste");
+wirePasteUrl(eventTweetPaste, eventTweetInput);
 var eventHolidaySwitch = document.getElementById("eventHolidaySwitch");
 var eventTweetOpen = document.getElementById("eventTweetOpen");
 var eventDeleteEventBtn = document.getElementById("eventDeleteEventBtn");
@@ -1400,7 +1474,7 @@ function openEventDialog(id){
   eventTitleInput.value = ev.title;
   wireFloatingLabel(eventTitleInput);
   eventTweetInput.value = ev.tweetUrl || "";
-  wireFloatingLabel(eventTweetInput);
+  renderPasteUrl(eventTweetPaste, eventTweetInput.value);
   setSwitch(eventHolidaySwitch, ev.holiday);
 
   if (ev.tweetUrl){
@@ -1519,6 +1593,8 @@ var addImageInput = document.getElementById("addImageInput");
 var addDateInput = document.getElementById("addDateInput");
 var addTitleInput = document.getElementById("addTitleInput");
 var addTweetInput = document.getElementById("addTweetInput");
+var addTweetPaste = document.getElementById("addTweetPaste");
+wirePasteUrl(addTweetPaste, addTweetInput);
 var addHolidaySwitch = document.getElementById("addHolidaySwitch");
 
 function openAddDialog(){
@@ -1529,7 +1605,7 @@ function openAddDialog(){
   addTitleInput.value = "";
   wireFloatingLabel(addTitleInput);
   addTweetInput.value = "";
-  wireFloatingLabel(addTweetInput);
+  renderPasteUrl(addTweetPaste, "");
   setSwitch(addHolidaySwitch, true);
   renderImagePlaceholder(addImageZone);
   addDialogEl.showModal();
