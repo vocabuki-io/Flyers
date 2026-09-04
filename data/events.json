@@ -20,7 +20,7 @@
     {
       "date": "2025-08-02",
       "title": "周年",
-      "holiday": true,
+      "holiday": false,
       "source": "timetree",
       "icsUid": "faecbc58edf04f16a0c4dedd3e2bb497",
       "icsCategory": "休日営業",
