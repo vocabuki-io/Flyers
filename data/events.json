@@ -8,7 +8,7 @@
     {
       "date": "2025-08-01",
       "title": "ボカゲーム",
-      "holiday": true,
+      "holiday": false,
       "source": "timetree",
       "icsUid": "5b05ecee35e44835bab9fafe167b62b0",
       "icsCategory": "休日営業",
