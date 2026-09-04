@@ -36,8 +36,8 @@
       "source": "timetree",
       "icsUid": "fcc41724fd6f486694f5866888b366cf",
       "icsCategory": "休日営業",
-      "tweetUrl": null,
-      "image": null,
+      "tweetUrl": "https://x.com/vocabuki/status/1936771325672259805?s=46",
+      "image": "images/2025-08-08-ae4e17.jpg",
       "note": "",
       "id": "2025-08-08-ae4e17"
     },
@@ -1847,17 +1847,6 @@
     },
     {
       "date": "2026-06-29",
-      "title": "前飲み",
-      "holiday": false,
-      "source": "gcal",
-      "gcalId": "1e9btc1lrq7abn08q4rsl54ou0",
-      "tweetUrl": null,
-      "image": null,
-      "note": "",
-      "id": "2026-06-29-386a3a"
-    },
-    {
-      "date": "2026-06-29",
       "title": "飲みマンデイ",
       "holiday": false,
       "source": "gcal",
@@ -1866,6 +1855,17 @@
       "image": null,
       "note": "",
       "id": "2026-06-29-ac91fc"
+    },
+    {
+      "date": "2026-06-29",
+      "title": "前飲み",
+      "holiday": false,
+      "source": "gcal",
+      "gcalId": "1e9btc1lrq7abn08q4rsl54ou0",
+      "tweetUrl": null,
+      "image": null,
+      "note": "",
+      "id": "2026-06-29-386a3a"
     },
     {
       "date": "2026-06-30",
