@@ -1805,7 +1805,7 @@
     {
       "date": "2026-06-19",
       "title": "会議",
-      "holiday": true,
+      "holiday": false,
       "source": "gcal",
       "gcalId": "ibr97g10ksf4q1tujr9lbckkgc",
       "tweetUrl": null,
