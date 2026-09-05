@@ -147,6 +147,14 @@ a{ color: var(--md-primary); }
   justify-content: space-between;
   gap: 12px;
 }
+/* Version label — APP_VERSION in the script is bumped by one on every merge to main. */
+.app-bar-actions{ display:flex; align-items:center; gap:10px; }
+.version-chip{
+  font-size: 12px; font-weight: 700; letter-spacing: .02em;
+  padding: 6px 12px; border-radius: 999px;
+  background: var(--md-tertiary-container); color: var(--md-on-tertiary-container);
+  white-space: nowrap;
+}
 .app-title{
   margin: 0;
   font-size: clamp(22px, 5vw, 30px);
@@ -729,6 +737,7 @@ dialog.m3-dialog[open]{
   <div class="app-bar-row">
     <h1 class="app-title">ボカブキ<br>フライヤー収集</h1>
     <div class="app-bar-actions">
+      <span class="version-chip" id="versionChip" title="マージごとに +1">ver.—</span>
       <button id="settingsBtn" class="icon-button" aria-label="設定" title="設定">
         <span class="ms">settings</span>
       </button>
@@ -893,6 +902,10 @@ dialog.m3-dialog[open]{
 /* ============================================================
    State
    ============================================================ */
+/* Bump by one on every merge to main (ver.1 = first release). */
+var APP_VERSION = 5;
+document.getElementById("versionChip").textContent = "ver." + APP_VERSION;
+
 var STATE = {
   anniversary: "2026-09-26",
   range: { from: "2025-08-01", to: "2026-09-30" },
