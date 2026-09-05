@@ -6,6 +6,16 @@
   },
   "events": [
     {
+      "id": "2025-04-18-shadow-night",
+      "date": "2025-04-18",
+      "title": "shadow night",
+      "holiday": true,
+      "source": "manual",
+      "tweetUrl": "https://x.com/shadow_buki/status/2031671144865226884?s=46",
+      "image": "images/2025-04-18-shadow-night.jpg",
+      "note": ""
+    },
+    {
       "date": "2025-08-01",
       "title": "ボカゲーム",
       "holiday": false,
