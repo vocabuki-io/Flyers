@@ -2267,7 +2267,7 @@
     {
       "date": "2026-09-11",
       "title": "ドルテン",
-      "holiday": true,
+      "holiday": false,
       "source": "gcal",
       "gcalId": "03ohed31844co8kfrs09me2o8o",
       "tweetUrl": null,
