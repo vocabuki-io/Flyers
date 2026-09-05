@@ -1970,7 +1970,7 @@
     {
       "date": "2026-07-11",
       "title": "ボカマツリ",
-      "holiday": true,
+      "holiday": false,
       "source": "gcal",
       "gcalId": "jtm76d9sk02h9q2qeib7qikt40",
       "tweetUrl": null,
