@@ -584,10 +584,24 @@
       "source": "timetree",
       "icsUid": "15a15c4f90d243ae9bd5d620ff8336ed",
       "icsCategory": "休日営業",
-      "tweetUrl": null,
-      "image": null,
+      "tweetUrl": "https://x.com/vocabuki/status/1985279411558678718?s=46",
+      "image": "images/2025-11-07-vocabuki-girls-party.jpg",
       "note": "",
-      "id": "2025-11-07-vocabuki-girls-party"
+      "id": "2025-11-07-vocabuki-girls-party",
+      "_previewUrl": "blob:https://vocabuki-io.github.io/9108b31a-946e-4c01-9792-5e3aa3cafb44",
+      "_saving": true,
+      "_error": null,
+      "_draft": {
+        "id": "2025-11-07-vocabuki-girls-party",
+        "date": "2025-11-07",
+        "title": "VOCABUKI GIRLS PARTY",
+        "holiday": true,
+        "source": "timetree",
+        "tweetUrl": "https://x.com/vocabuki/status/1985279411558678718?s=46",
+        "note": "",
+        "image": "images/2025-11-07-vocabuki-girls-party.jpg"
+      },
+      "_pendingFile": {}
     },
     {
       "date": "2025-11-08",
