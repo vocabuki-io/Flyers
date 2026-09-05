@@ -1815,7 +1815,7 @@
     {
       "date": "2026-06-26",
       "title": "ボカブキMTG",
-      "holiday": true,
+      "holiday": false,
       "source": "gcal",
       "gcalId": "r6sfhqqr3scu35uv2migam4238",
       "tweetUrl": null,
