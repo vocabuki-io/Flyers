@@ -899,6 +899,7 @@ var STATE = {
   events: [],
   filter: "holiday", // "holiday" | "all"
   missing: { image: false, url: false }, // extra filters: show only events lacking these
+  remote: null, // { sha, json } — last known server copy of data/events.json (base for the next write)
   currentEventId: null,   // event dialog target
   pendingImageFile: null, // File pending upload (event dialog)
   pendingImageFileAdd: null // File pending upload (add dialog)
@@ -1035,20 +1036,34 @@ function showSnackbar(msg, isError){
 /* ============================================================
    Data loading
    ============================================================ */
+function apiBase(){
+  var settings = getSettings();
+  return "https://api.github.com/repos/" + encodeURIComponent(settings.owner) + "/" + encodeURIComponent(settings.repo);
+}
+function apiHeaders(){
+  return { "Authorization": "Bearer " + getSettings().token, "Accept": "application/vnd.github+json" };
+}
+/* Read data/events.json at the branch's current head commit. Reading via the branch name
+   is served from a ~60s cache on GitHub's side, which returned stale shas right after a save. */
+async function fetchRemoteEvents(){
+  var settings = getSettings();
+  var refRes = await fetch(apiBase() + "/git/ref/heads/" + encodeURIComponent(settings.branch), { headers: apiHeaders(), cache: "no-store" });
+  if (!refRes.ok) throw new Error("ブランチ取得失敗 (" + refRes.status + ")");
+  var commitSha = (await refRes.json()).object.sha;
+  var res = await fetch(apiBase() + "/contents/data/events.json?ref=" + commitSha, { headers: apiHeaders(), cache: "no-store" });
+  if (!res.ok) throw new Error("events.json 取得失敗 (" + res.status + ")");
+  var j = await res.json();
+  var remote = { sha: j.sha, json: JSON.parse(decodeBase64Utf8(j.content)) };
+  STATE.remote = remote;
+  return remote;
+}
+
 async function loadEventsData(){
   var settings = getSettings();
   if (settings.token){
     try{
-      var url = "https://api.github.com/repos/" + encodeURIComponent(settings.owner) + "/" +
-                 encodeURIComponent(settings.repo) + "/contents/data/events.json?ref=" + encodeURIComponent(settings.branch);
-      var res = await fetch(url, {
-        headers: {
-          "Authorization": "Bearer " + settings.token,
-          "Accept": "application/vnd.github.raw+json"
-        }
-      });
-      if (!res.ok) throw new Error("GitHub fetch failed: " + res.status);
-      return await res.json();
+      var remote = await fetchRemoteEvents();
+      return remote.json;
     }catch(err){
       console.warn("GitHub Contents API fetch failed, falling back to relative fetch.", err);
     }
@@ -1094,7 +1109,9 @@ async function githubPutFile(path, base64Content, sha, message){
   if (!res.ok){
     var errText = "";
     try{ errText = (await res.json()).message || ""; }catch(e){}
-    throw new Error("GitHub 保存失敗 (" + res.status + ") " + errText);
+    var e = new Error("GitHub 保存失敗 (" + res.status + ") " + errText);
+    e.status = res.status;
+    throw e;
   }
   return await res.json();
 }
@@ -1107,9 +1124,6 @@ async function persistEvent(draft, pendingFile, opts){
     openSettingsDialog();
     throw new Error("NO_TOKEN");
   }
-
-  // Read events.json metadata in parallel with the image upload (independent files).
-  var dataFilePromise = githubGetSha("data/events.json");
 
   if (pendingFile){
     pendingFile = await optimizeImage(pendingFile);
@@ -1125,39 +1139,62 @@ async function persistEvent(draft, pendingFile, opts){
         if (existing) sha = existing.sha;
       }catch(e){ /* ignore, treat as new file */ }
     }
-    await githubPutFile(imagePath, base64, sha, "flyer: " + draft.date + " " + draft.title + " 画像");
+    try{
+      await githubPutFile(imagePath, base64, sha, "flyer: " + draft.date + " " + draft.title + " 画像");
+    }catch(err){
+      // File already exists (e.g. an earlier save uploaded the image but failed afterwards): fetch its sha and overwrite.
+      if (err.status !== 422 && err.status !== 409) throw err;
+      var ex = await githubGetSha(imagePath);
+      await githubPutFile(imagePath, base64, ex ? ex.sha : null, "flyer: " + draft.date + " " + draft.title + " 画像");
+    }
     draft.image = imagePath;
   }
 
-  var dataFile = await dataFilePromise;
-  if (!dataFile) throw new Error("data/events.json が見つかりません");
-  var currentJson = JSON.parse(decodeBase64Utf8(dataFile.content));
-
-  if (opts.deleteEvent){
-    currentJson.events = currentJson.events.filter(function(e){ return e.id !== draft.id; });
-  } else {
-    var clean = {};
-    Object.keys(draft).forEach(function(k){ if (k.charAt(0) !== "_") clean[k] = draft[k]; });
-    var idx = currentJson.events.findIndex(function(e){ return e.id === draft.id; });
-    if (idx >= 0){
-      currentJson.events[idx] = Object.assign({}, currentJson.events[idx], clean);
+  function applyDraft(baseJson){
+    var currentJson = JSON.parse(JSON.stringify(baseJson));
+    if (opts.deleteEvent){
+      currentJson.events = currentJson.events.filter(function(e){ return e.id !== draft.id; });
     } else {
-      currentJson.events.push(clean);
+      var clean = {};
+      Object.keys(draft).forEach(function(k){ if (k.charAt(0) !== "_") clean[k] = draft[k]; });
+      var idx = currentJson.events.findIndex(function(e){ return e.id === draft.id; });
+      if (idx >= 0){
+        currentJson.events[idx] = Object.assign({}, currentJson.events[idx], clean);
+      } else {
+        currentJson.events.push(clean);
+      }
     }
+    currentJson.events.sort(function(a, b){
+      if (a.date !== b.date) return a.date < b.date ? -1 : 1;
+      return a.title.localeCompare(b.title, "ja");
+    });
+    return currentJson;
   }
-  currentJson.events.sort(function(a, b){
-    if (a.date !== b.date) return a.date < b.date ? -1 : 1;
-    return a.title.localeCompare(b.title, "ja");
-  });
 
-  var newContent = JSON.stringify(currentJson, null, 2) + "\n";
-  var newBase64 = base64EncodeUtf8(newContent);
   var commitMsg = opts.deleteEvent
     ? "flyer: delete " + draft.date + " " + draft.title
     : "flyer: " + draft.date + " " + draft.title;
-  await githubPutFile("data/events.json", newBase64, dataFile.sha, commitMsg);
 
-  return currentJson;
+  // Write on top of the last copy we know (from load or from our previous save) — no read
+  // round trip. If GitHub says the sha is stale (someone else / another tab wrote), re-read
+  // at the head commit and retry.
+  var base = STATE.remote || await fetchRemoteEvents();
+  for (var attempt = 0; ; attempt++){
+    var currentJson = applyDraft(base.json);
+    var newBase64 = base64EncodeUtf8(JSON.stringify(currentJson, null, 2) + "\n");
+    try{
+      var put = await githubPutFile("data/events.json", newBase64, base.sha, commitMsg);
+      STATE.remote = { sha: (put.content && put.content.sha) || null, json: currentJson };
+      if (!STATE.remote.sha) STATE.remote = null; // unknown sha -> next save re-reads
+      return currentJson;
+    }catch(err){
+      if ((err.status === 409 || err.status === 422) && attempt < 2){
+        base = await fetchRemoteEvents();
+        continue;
+      }
+      throw err;
+    }
+  }
 }
 
 /* ============================================================
