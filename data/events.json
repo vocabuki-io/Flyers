@@ -972,10 +972,24 @@
       "source": "timetree",
       "icsUid": "f1b5c657122740948fad1783de492dd5",
       "icsCategory": "休日営業",
-      "tweetUrl": null,
-      "image": null,
+      "tweetUrl": "https://x.com/shadow_buki/status/2011416467095625921?s=46",
+      "image": "images/2026-01-23-shadow-night.jpg",
       "note": "",
-      "id": "2026-01-23-shadow-night"
+      "id": "2026-01-23-shadow-night",
+      "_previewUrl": "blob:https://vocabuki-io.github.io/d64796c2-e7a8-4bf7-a9b5-10b95342d302",
+      "_saving": true,
+      "_error": null,
+      "_draft": {
+        "id": "2026-01-23-shadow-night",
+        "date": "2026-01-23",
+        "title": "Shadow Night",
+        "holiday": true,
+        "source": "timetree",
+        "tweetUrl": "https://x.com/shadow_buki/status/2011416467095625921?s=46",
+        "note": "",
+        "image": "images/2026-01-23-shadow-night.jpg"
+      },
+      "_pendingFile": {}
     },
     {
       "date": "2026-01-24",
