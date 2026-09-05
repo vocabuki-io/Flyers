@@ -14,6 +14,11 @@
 - `scripts/ics_to_events.py` / `scripts/gcal_to_events.py` — 外部カレンダーのデータを
   `data/events.json` にマージするスクリプト。
 
+## バージョン表示
+
+ヘッダー右上の `ver.N` は `index.html` 内の `APP_VERSION` の値です。**main にマージするごとに +1** します
+（ver.1 = 初回リリース PR #1）。
+
 ## GitHub Pages の有効化
 
 1. GitHub のリポジトリ設定 → **Pages** を開く。
