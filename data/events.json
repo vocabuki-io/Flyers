@@ -1104,10 +1104,24 @@
       "source": "timetree",
       "icsUid": "afaa007be7ed41d2b22202be42f0cbda",
       "icsCategory": "休日営業",
-      "tweetUrl": null,
-      "image": null,
+      "tweetUrl": "https://x.com/aym_pngn/status/2019328290683777229?s=46",
+      "image": "images/2026-02-06-8169ed.jpg",
       "note": "",
-      "id": "2026-02-06-8169ed"
+      "id": "2026-02-06-8169ed",
+      "_previewUrl": "blob:https://vocabuki-io.github.io/4dfab859-2621-4e71-9d7c-d7f11a706fa9",
+      "_saving": true,
+      "_error": null,
+      "_draft": {
+        "id": "2026-02-06-8169ed",
+        "date": "2026-02-06",
+        "title": "ぼかぶき漢祭り",
+        "holiday": true,
+        "source": "timetree",
+        "tweetUrl": "https://x.com/aym_pngn/status/2019328290683777229?s=46",
+        "note": "",
+        "image": "images/2026-02-06-8169ed.jpg"
+      },
+      "_pendingFile": {}
     },
     {
       "date": "2026-02-08",
