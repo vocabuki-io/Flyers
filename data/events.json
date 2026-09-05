@@ -2036,7 +2036,7 @@
     {
       "date": "2026-07-18",
       "title": "成澤生誕 15-21 渋谷",
-      "holiday": true,
+      "holiday": false,
       "source": "gcal",
       "gcalId": "661gbl022lm8ohbf9qj0h3etvc",
       "tweetUrl": null,
