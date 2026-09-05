@@ -508,7 +508,7 @@
     {
       "date": "2025-10-25",
       "title": "アニカブキ Vol.2",
-      "holiday": true,
+      "holiday": false,
       "source": "timetree",
       "icsUid": "9710df42b2654f2eb4708129e6e02028",
       "icsCategory": "休日営業",
