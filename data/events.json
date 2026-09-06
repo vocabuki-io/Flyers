@@ -152,10 +152,24 @@
       "source": "timetree",
       "icsUid": "71e50143813a437e95e8fc7fc7f4e721",
       "icsCategory": "休日営業",
-      "tweetUrl": null,
+      "tweetUrl": "https://x.com/aym_pngn/status/1955244045137219696?s=46",
       "image": "images/2025-08-29-cb7a14.jpg",
       "note": "",
-      "id": "2025-08-29-cb7a14"
+      "id": "2025-08-29-cb7a14",
+      "_previewUrl": "blob:https://vocabuki-io.github.io/580c3242-9d71-40ad-92db-3c66c3fbbb27",
+      "_saving": true,
+      "_error": null,
+      "_draft": {
+        "id": "2025-08-29-cb7a14",
+        "date": "2025-08-29",
+        "title": "シン・アニクラ",
+        "holiday": true,
+        "source": "timetree",
+        "tweetUrl": "https://x.com/aym_pngn/status/1955244045137219696?s=46",
+        "note": "",
+        "image": "images/2025-08-29-cb7a14.jpg"
+      },
+      "_pendingFile": {}
     },
     {
       "date": "2025-08-30",
