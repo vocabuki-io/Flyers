@@ -426,7 +426,7 @@
     {
       "date": "2025-10-11",
       "title": "Vocabuki GIRLS PARTRY",
-      "holiday": true,
+      "holiday": false,
       "source": "timetree",
       "icsUid": "5f4a03d8ca0f422ab494f3a67a28b53e",
       "icsCategory": "休日営業",
