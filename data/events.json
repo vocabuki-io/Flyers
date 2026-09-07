@@ -1720,10 +1720,24 @@
       "source": "timetree",
       "icsUid": "ddaf3d331e3a4fe1a458b053a4b3eb33",
       "icsCategory": "休日営業",
-      "tweetUrl": null,
-      "image": null,
+      "tweetUrl": "https://x.com/yamivoca/status/2057763706013094272?s=46",
+      "image": "images/2026-05-30-aefdff.jpg",
       "note": "",
-      "id": "2026-05-30-aefdff"
+      "id": "2026-05-30-aefdff",
+      "_previewUrl": "blob:https://vocabuki-io.github.io/ee33b4c3-e8f1-441e-9985-8f606da65b77",
+      "_saving": true,
+      "_error": null,
+      "_draft": {
+        "id": "2026-05-30-aefdff",
+        "date": "2026-05-30",
+        "title": "病みボカ",
+        "holiday": true,
+        "source": "timetree",
+        "tweetUrl": "https://x.com/yamivoca/status/2057763706013094272?s=46",
+        "note": "",
+        "image": "images/2026-05-30-aefdff.jpg"
+      },
+      "_pendingFile": {}
     },
     {
       "date": "2026-06-01",
