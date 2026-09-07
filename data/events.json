@@ -1178,10 +1178,24 @@
       "source": "timetree",
       "icsUid": "5f6249b3af984852858f52219525b69c",
       "icsCategory": "休日営業",
-      "tweetUrl": null,
-      "image": null,
+      "tweetUrl": "https://x.com/drag_on_3/status/2015377179564241038?s=46",
+      "image": "images/2026-02-13-f78f26.jpg",
       "note": "",
-      "id": "2026-02-13-f78f26"
+      "id": "2026-02-13-f78f26",
+      "_previewUrl": "blob:https://vocabuki-io.github.io/65ace669-adb3-4e24-8ebb-b0905b2f5c9d",
+      "_saving": true,
+      "_error": null,
+      "_draft": {
+        "id": "2026-02-13-f78f26",
+        "date": "2026-02-13",
+        "title": "ドラゴン生誕祭",
+        "holiday": true,
+        "source": "timetree",
+        "tweetUrl": "https://x.com/drag_on_3/status/2015377179564241038?s=46",
+        "note": "",
+        "image": "images/2026-02-13-f78f26.jpg"
+      },
+      "_pendingFile": {}
     },
     {
       "date": "2026-02-14",
