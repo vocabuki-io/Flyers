@@ -2049,6 +2049,17 @@
     },
     {
       "date": "2026-07-11",
+      "title": "ドカブキ",
+      "holiday": true,
+      "source": "gcal",
+      "gcalId": "futmst5ss99ohj4intnpbskc5o",
+      "tweetUrl": "https://x.com/vocabuki/status/2068897490783584664?s=46",
+      "image": "images/2026-07-11-18bad8.jpg",
+      "note": "",
+      "id": "2026-07-11-18bad8"
+    },
+    {
+      "date": "2026-07-11",
       "title": "ボカマツリ",
       "holiday": false,
       "source": "gcal",
@@ -2057,17 +2068,6 @@
       "image": null,
       "note": "",
       "id": "2026-07-11-6c6b51"
-    },
-    {
-      "date": "2026-07-11",
-      "title": "レイヴイベント(仮)",
-      "holiday": true,
-      "source": "gcal",
-      "gcalId": "futmst5ss99ohj4intnpbskc5o",
-      "tweetUrl": null,
-      "image": null,
-      "note": "",
-      "id": "2026-07-11-18bad8"
     },
     {
       "date": "2026-07-15",
