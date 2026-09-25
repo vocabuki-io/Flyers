@@ -2210,7 +2210,22 @@
       "tweetUrl": "https://x.com/vocabuki/status/2085639724446765131?s=46",
       "image": "images/2026-08-08-90b041.jpg",
       "note": "",
-      "id": "2026-08-08-90b041"
+      "id": "2026-08-08-90b041",
+      "_previewUrl": "blob:https://vocabuki-io.github.io/4421b2f6-f7c9-4039-b31a-4b70cc51a368",
+      "_saving": true,
+      "_error": null,
+      "_draft": {
+        "id": "2026-08-08-90b041",
+        "date": "2026-08-08",
+        "title": "緊急でDJ2",
+        "holiday": true,
+        "source": "gcal",
+        "tweetUrl": "https://x.com/vocabuki/status/2085639724446765131?s=46",
+        "note": "",
+        "gcalId": "00ep7as7v55emf0k84iqotngrs",
+        "image": "images/2026-08-08-90b041.jpg"
+      },
+      "_pendingFile": {}
     },
     {
       "date": "2026-08-10",
